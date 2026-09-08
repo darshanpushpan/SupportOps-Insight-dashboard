@@ -1,0 +1,1808 @@
+{
+  "disclaimer": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+  "scenario": "Northstar Retail fictional company. OrderFlow fictional order-management system. Simulated Monday 17 Aug 2026 access incident.",
+  "ticket_count": 26,
+  "tickets": [
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": true,
+      "resolution_minutes": 154,
+      "root_cause_category": "Account lockout after password reset",
+      "resolution_summary": "Confirmed lockout in auth logs. Unlocked after identity verification. Shared password-reset guidance. Linked to INC-20260817-001.",
+      "ticket_id": "TCK-1001",
+      "created_at": "2026-08-17T08:06:00",
+      "updated_at": "2026-08-17T10:40:00",
+      "status": "Closed",
+      "priority": "P2",
+      "category": "Account Lockout",
+      "requester_role": "Finance Analyst",
+      "requester_alias": "finance.analyst01",
+      "short_description": "Cannot sign in to OrderFlow after password reset \u2014 account locked",
+      "user_facing_summary": "User reports invalid credentials, then a lockout message, after following the password-reset email.",
+      "business_impact": "Finance cannot post morning journal entries. Several Finance users reported the same pattern.",
+      "impact_scope": "Department",
+      "assigned_group": "Identity & Access",
+      "assigned_to": "agent.nova",
+      "first_response_minutes": 8,
+      "sla_target_minutes": 240,
+      "sla_status": "Met",
+      "escalation_reasoning": "Multiple Finance and Operations users hit lockouts in the same window. Treated as a multi-user access incident, not a single-user password issue.",
+      "related_runbook": "Account Lockout",
+      "prevention_action": "Add lockout guidance to the password-reset knowledge article.",
+      "priority_justification": "P2: department-level access impact during business hours; OrderFlow itself remained healthy.",
+      "investigation_notes": "Auth logs showed repeated failed_login then account_lockout. Application health checks stayed 200 OK.",
+      "related_log_events": [
+        "08:08 failed_login finance.analyst01 invalid_credentials",
+        "08:09 failed_login finance.analyst01 invalid_credentials",
+        "08:10 account_lockout finance.analyst01 threshold_exceeded"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Confirm user identity per access-control policy",
+          "done": true
+        },
+        {
+          "item": "Distinguish one-user vs multi-user reports",
+          "done": true
+        },
+        {
+          "item": "Check application health before assuming outage",
+          "done": true
+        },
+        {
+          "item": "Review auth logs for failed logins and lockouts",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T08:06:00",
+          "note": "User opened ticket from Finance."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T08:14:00",
+          "note": "L1 acknowledged and tagged Identity & Access."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T08:22:00",
+          "note": "Auth logs confirmed lockout; app health normal."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-17T10:20:00",
+          "note": "Account unlocked; user signed in."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-17T10:40:00",
+          "note": "User confirmed access restored."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": true,
+      "resolution_minutes": 140,
+      "root_cause_category": "Account lockout after password reset",
+      "resolution_summary": "Unlocked after verification. Advised waiting for password-reset confirmation before retrying.",
+      "ticket_id": "TCK-1002",
+      "created_at": "2026-08-17T08:11:00",
+      "updated_at": "2026-08-17T10:35:00",
+      "status": "Closed",
+      "priority": "P2",
+      "category": "Account Lockout",
+      "requester_role": "Finance Analyst",
+      "requester_alias": "finance.analyst02",
+      "short_description": "OrderFlow login locked after several failed attempts",
+      "user_facing_summary": "User received invalid credentials, retried, then saw an account-locked message.",
+      "business_impact": "Second Finance user blocked from month-end checks. Pattern matches TCK-1001.",
+      "impact_scope": "Department",
+      "assigned_group": "Identity & Access",
+      "assigned_to": "agent.nova",
+      "first_response_minutes": 6,
+      "sla_target_minutes": 240,
+      "sla_status": "Met",
+      "escalation_reasoning": "Confirmed this is not an isolated account. Same window as other Finance lockouts.",
+      "related_runbook": "Account Lockout",
+      "prevention_action": "Surface remaining-attempt count on the login page (product follow-up).",
+      "priority_justification": "P2: related to multi-user access incident INC-20260817-001.",
+      "investigation_notes": "Clustered with TCK-1001 and TCK-1003. No API errors on OrderFlow.",
+      "related_log_events": [
+        "08:12 failed_login finance.analyst02 invalid_credentials",
+        "08:13 account_lockout finance.analyst02 threshold_exceeded"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Confirm identity",
+          "done": true
+        },
+        {
+          "item": "Check related tickets same morning",
+          "done": true
+        },
+        {
+          "item": "Verify app health",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T08:11:00",
+          "note": "Ticket opened."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T08:17:00",
+          "note": "Linked to access incident."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T08:25:00",
+          "note": "Lockout confirmed in logs."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-17T10:25:00",
+          "note": "Unlock completed."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-17T10:35:00",
+          "note": "User confirmed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": true,
+      "resolution_minutes": 165,
+      "root_cause_category": "Account lockout after password reset",
+      "resolution_summary": "Account unlocked. User signed in successfully. Ticket remains Resolved pending 24-hour monitoring.",
+      "ticket_id": "TCK-1003",
+      "created_at": "2026-08-17T08:18:00",
+      "updated_at": "2026-08-17T11:05:00",
+      "status": "Resolved",
+      "priority": "P2",
+      "category": "Account Lockout",
+      "requester_role": "Operations Coordinator",
+      "requester_alias": "ops.coordinator01",
+      "short_description": "Ops user locked out of OrderFlow warehouse console",
+      "user_facing_summary": "Warehouse coordinator cannot sign in; lockout message after password reset retries.",
+      "business_impact": "Operations dispatch board delayed for one coordinator; other warehouse functions continued.",
+      "impact_scope": "Team",
+      "assigned_group": "Identity & Access",
+      "assigned_to": "agent.river",
+      "first_response_minutes": 12,
+      "sla_target_minutes": 240,
+      "sla_status": "Met",
+      "escalation_reasoning": "Ops and Finance lockouts in the same hour. Escalated as multi-user access incident.",
+      "related_runbook": "Account Lockout",
+      "prevention_action": "Include Operations in the password-reset comms template.",
+      "priority_justification": "P2: operations access during peak receiving window.",
+      "investigation_notes": "Auth lockout events present; application jobs completed on schedule.",
+      "related_log_events": [
+        "08:19 failed_login ops.coordinator01 invalid_credentials",
+        "08:21 account_lockout ops.coordinator01 threshold_exceeded"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Confirm identity",
+          "done": true
+        },
+        {
+          "item": "Check POS vs OrderFlow scope",
+          "done": true
+        },
+        {
+          "item": "Review auth logs",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T08:18:00",
+          "note": "Ops coordinator called the desk."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T08:30:00",
+          "note": "Linked to INC-20260817-001."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T08:40:00",
+          "note": "Lockout + healthy app checks."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-17T11:05:00",
+          "note": "Unlock verified."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "Awaiting standard close window."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 71,
+      "root_cause_category": "Password reset process confusion",
+      "resolution_summary": "Walked user through the reset email, confirmed new password, documented KB gap.",
+      "ticket_id": "TCK-1004",
+      "created_at": "2026-08-17T08:09:00",
+      "updated_at": "2026-08-17T09:20:00",
+      "status": "Closed",
+      "priority": "P3",
+      "category": "Password Reset",
+      "requester_role": "Finance Coordinator",
+      "requester_alias": "finance.coordinator01",
+      "short_description": "Password reset completed but old password still used",
+      "user_facing_summary": "User requested a reset, then continued signing in with the previous password.",
+      "business_impact": "Individual Finance coordinator delayed; contributed to later lockouts on other accounts.",
+      "impact_scope": "Individual",
+      "assigned_group": "Service Desk L1",
+      "assigned_to": "agent.sage",
+      "first_response_minutes": 5,
+      "sla_target_minutes": 480,
+      "sla_status": "Met",
+      "related_runbook": "User Cannot Sign In",
+      "prevention_action": "Publish a short \u201cafter you reset your password\u201d article.",
+      "priority_justification": "P3: single user, workaround available via reset flow.",
+      "investigation_notes": "No lockout yet on this alias. Failed logins used the old password.",
+      "related_log_events": [
+        "08:04 password_reset finance.coordinator01",
+        "08:10 failed_login finance.coordinator01 invalid_credentials"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Verify identity before discussing reset",
+          "done": true
+        },
+        {
+          "item": "Do not share passwords in ticket notes",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T08:09:00",
+          "note": "Self-service ticket."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T08:14:00",
+          "note": "L1 response."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T08:18:00",
+          "note": "Reset event present in logs."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-17T09:15:00",
+          "note": "User signed in with new password."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-17T09:20:00",
+          "note": "User confirmed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": true,
+      "resolution_minutes": 206,
+      "root_cause_category": "Stale MFA enrollment",
+      "resolution_summary": "Cleared stale enrollment after identity verification and completed MFA re-enrollment.",
+      "ticket_id": "TCK-1005",
+      "created_at": "2026-08-17T08:24:00",
+      "updated_at": "2026-08-17T11:50:00",
+      "status": "Resolved",
+      "priority": "P2",
+      "category": "MFA Failure",
+      "requester_role": "Operations Coordinator",
+      "requester_alias": "ops.coordinator02",
+      "short_description": "MFA prompt fails after recent device replacement",
+      "user_facing_summary": "Password accepted; MFA verification fails with enrollment mismatch.",
+      "business_impact": "Ops coordinator cannot approve OrderFlow transfers until MFA is re-enrolled.",
+      "impact_scope": "Individual",
+      "assigned_group": "Identity & Access",
+      "assigned_to": "agent.river",
+      "first_response_minutes": 15,
+      "sla_target_minutes": 240,
+      "sla_status": "Met",
+      "escalation_reasoning": "MFA enrollment change requires Identity & Access; not an application outage.",
+      "related_runbook": "MFA Troubleshooting",
+      "prevention_action": "Review MFA enrollment after device replacement tickets.",
+      "priority_justification": "P2: blocks a time-sensitive ops approval role; still individual scope.",
+      "investigation_notes": "mfa_enrollment_mismatch in auth logs. App health unaffected.",
+      "related_log_events": [
+        "08:25 mfa_failure ops.coordinator02 enrollment_mismatch",
+        "08:26 mfa_enrollment_mismatch ops.coordinator02 stale_device"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Confirm password vs MFA failure",
+          "done": true
+        },
+        {
+          "item": "Check device replacement history",
+          "done": true
+        },
+        {
+          "item": "Follow MFA re-enrollment policy",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T08:24:00",
+          "note": "User chat to Service Desk."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T08:39:00",
+          "note": "Escalated to Identity & Access."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T09:05:00",
+          "note": "Stale enrollment confirmed."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-17T11:40:00",
+          "note": "Re-enrollment completed."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "Pending close after confirmation window."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": true,
+      "resolution_minutes": 217,
+      "root_cause_category": "Stale MFA enrollment",
+      "resolution_summary": "Removed stale factor, completed new enrollment, user signed in.",
+      "ticket_id": "TCK-1006",
+      "created_at": "2026-08-17T08:33:00",
+      "updated_at": "2026-08-17T12:10:00",
+      "status": "Closed",
+      "priority": "P2",
+      "category": "MFA Failure",
+      "requester_role": "Finance Analyst",
+      "requester_alias": "finance.analyst03",
+      "short_description": "MFA codes rejected; authenticator out of sync",
+      "user_facing_summary": "User can enter password; MFA codes from the old authenticator are rejected.",
+      "business_impact": "Finance analyst blocked from OrderFlow until re-enrollment.",
+      "impact_scope": "Individual",
+      "assigned_group": "Identity & Access",
+      "assigned_to": "agent.nova",
+      "first_response_minutes": 11,
+      "sla_target_minutes": 240,
+      "sla_status": "Met",
+      "escalation_reasoning": "MFA reset is Identity & Access owned. Related to the morning access incident cluster.",
+      "related_runbook": "MFA Troubleshooting",
+      "prevention_action": "Ask about device or authenticator changes during intake.",
+      "priority_justification": "P2: Finance access during the same incident window.",
+      "investigation_notes": "No lockout. Distinct from password-reset lockout path.",
+      "related_log_events": [
+        "08:34 mfa_failure finance.analyst03 invalid_code",
+        "08:35 mfa_enrollment_mismatch finance.analyst03 stale_factor"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Separate MFA from password failures",
+          "done": true
+        },
+        {
+          "item": "Identity verification before reset",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T08:33:00",
+          "note": "Ticket opened."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T08:44:00",
+          "note": "Queued behind lockouts."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T09:20:00",
+          "note": "Stale MFA factor."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-17T12:00:00",
+          "note": "New enrollment works."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-17T12:10:00",
+          "note": "User confirmed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": false,
+      "escalation_required": false,
+      "resolution_minutes": null,
+      "root_cause_category": "Role mapping / access request",
+      "resolution_summary": "Pending manager confirmation of the approval role (policy required).",
+      "ticket_id": "TCK-1007",
+      "created_at": "2026-08-17T09:05:00",
+      "updated_at": "2026-08-17T13:00:00",
+      "status": "In Progress",
+      "priority": "P3",
+      "category": "User Access / Permissions",
+      "requester_role": "Operations Supervisor",
+      "requester_alias": "ops.supervisor01",
+      "short_description": "Need OrderFlow transfer-approval role after coverage change",
+      "user_facing_summary": "User can sign in but cannot approve transfers that their role should allow.",
+      "business_impact": "Supervisor coverage gap for transfer approvals; workaround is another supervisor.",
+      "impact_scope": "Team",
+      "assigned_group": "Application Support L2",
+      "assigned_to": "agent.quinn",
+      "first_response_minutes": 18,
+      "sla_target_minutes": 480,
+      "sla_status": "At Risk",
+      "escalation_reasoning": "Login works. This is a role-mapping request, not an outage.",
+      "related_runbook": "User Cannot Sign In",
+      "prevention_action": "Include role review in coverage-change checklist.",
+      "priority_justification": "P3: workaround exists; not an authentication failure.",
+      "investigation_notes": "Successful login events. No MFA or lockout. Access-control change needs approval.",
+      "related_log_events": [
+        "09:06 login_success ops.supervisor01"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Confirm this is permissions, not lockout",
+          "done": true
+        },
+        {
+          "item": "Do not grant access without approver",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T09:05:00",
+          "note": "Email to Service Desk."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T09:23:00",
+          "note": "Reclassified from login issue."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T09:45:00",
+          "note": "Login healthy; role missing."
+        },
+        {
+          "phase": "Resolved",
+          "at": null,
+          "note": "Waiting on manager approval."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "Not closed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 29,
+      "root_cause_category": "How-to / knowledge gap",
+      "resolution_summary": "Sent existing knowledge article and confirmed the user completed the export.",
+      "ticket_id": "TCK-1008",
+      "created_at": "2026-08-17T08:41:00",
+      "updated_at": "2026-08-17T09:10:00",
+      "status": "Closed",
+      "priority": "P4",
+      "category": "Knowledge Base / How-To Request",
+      "requester_role": "Merchandise Planner",
+      "requester_alias": "merch.planner01",
+      "short_description": "How do I export yesterday\u2019s OrderFlow pick list?",
+      "user_facing_summary": "User asked for steps to export a pick list; no error occurred.",
+      "business_impact": "None. How-to request only.",
+      "impact_scope": "Individual",
+      "assigned_group": "Service Desk L1",
+      "assigned_to": "agent.sage",
+      "first_response_minutes": 9,
+      "sla_target_minutes": 1440,
+      "sla_status": "Met",
+      "related_runbook": "User Cannot Sign In",
+      "prevention_action": "Pin pick-list export article on the OrderFlow help widget.",
+      "priority_justification": "P4: no service impact.",
+      "investigation_notes": "No errors in application.log for this user.",
+      "related_log_events": [],
+      "triage_checklist": [
+        {
+          "item": "Confirm no error vs how-to",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T08:41:00",
+          "note": "Chat."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T08:50:00",
+          "note": "KB located."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T08:52:00",
+          "note": "Article matched request."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-17T09:05:00",
+          "note": "Steps sent."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-17T09:10:00",
+          "note": "User confirmed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": false,
+      "escalation_required": true,
+      "resolution_minutes": null,
+      "root_cause_category": "Application validation error",
+      "resolution_summary": "Workaround: omit gift-card line and process gift card on POS. Escalated to app owners.",
+      "ticket_id": "TCK-1009",
+      "created_at": "2026-08-17T10:15:00",
+      "updated_at": "2026-08-17T14:22:00",
+      "status": "Escalated",
+      "priority": "P3",
+      "category": "Application Error",
+      "requester_role": "Store Associate",
+      "requester_alias": "store.associate01",
+      "short_description": "OrderFlow order-save returns a validation error on gift-card SKU",
+      "user_facing_summary": "Saving an order with a gift-card line shows a validation error. Other orders save.",
+      "business_impact": "One SKU path fails. Store can complete cash/card orders.",
+      "impact_scope": "Individual",
+      "assigned_group": "Application Support L2",
+      "assigned_to": "agent.quinn",
+      "first_response_minutes": 22,
+      "sla_target_minutes": 480,
+      "sla_status": "At Risk",
+      "escalation_reasoning": "Reproduced in UAT clone notes; needs product/dev review of gift-card validation. Not an outage.",
+      "related_runbook": "Application Performance Triage",
+      "prevention_action": "Add gift-card SKU to regression checks.",
+      "priority_justification": "P3: limited SKU, workaround exists, app otherwise healthy.",
+      "investigation_notes": "Health checks OK. Isolated error in app logs for sku=GC-SIM-100.",
+      "related_log_events": [
+        "10:16 WARNING OrderFlow validation_error sku=GC-SIM-100 (simulated)"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Reproduce vs widespread failure",
+          "done": true
+        },
+        {
+          "item": "Check health and jobs",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T10:15:00",
+          "note": "Store ticket."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T10:37:00",
+          "note": "L1 captured SKU."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T11:10:00",
+          "note": "Isolated validation warning."
+        },
+        {
+          "phase": "Resolved",
+          "at": null,
+          "note": "Escalated to app owners."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "Open with L2/dev."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "Store POS",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 85,
+      "root_cause_category": "Device / printer",
+      "resolution_summary": "Cleared jam, reseated USB, printed test receipt. Documented in POS runbook.",
+      "ticket_id": "TCK-1010",
+      "created_at": "2026-08-16T16:40:00",
+      "updated_at": "2026-08-16T18:05:00",
+      "status": "Closed",
+      "priority": "P3",
+      "category": "POS Issue",
+      "requester_role": "Store Associate",
+      "requester_alias": "store.associate02",
+      "short_description": "Register 3 receipt printer offline after paper jam",
+      "user_facing_summary": "Receipts do not print on Register 3. Other registers at the same store work.",
+      "business_impact": "One lane slowed; store rerouted customers.",
+      "impact_scope": "Individual",
+      "assigned_group": "POS Support",
+      "assigned_to": "agent.sage",
+      "first_response_minutes": 14,
+      "sla_target_minutes": 480,
+      "sla_status": "Met",
+      "related_runbook": "POS / Device Support Triage",
+      "prevention_action": "Weekly printer walkthrough at store open.",
+      "priority_justification": "P3: single device, store still trading.",
+      "investigation_notes": "Not an OrderFlow login issue. Network ping to register OK.",
+      "related_log_events": [],
+      "triage_checklist": [
+        {
+          "item": "Confirm other registers work",
+          "done": true
+        },
+        {
+          "item": "Basic hardware checks before swap",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-16T16:40:00",
+          "note": "Store called."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-16T16:54:00",
+          "note": "POS queue."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-16T17:10:00",
+          "note": "Jam found."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-16T17:55:00",
+          "note": "Test print OK."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-16T18:05:00",
+          "note": "Store confirmed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "Store Network",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 260,
+      "root_cause_category": "Local wireless coverage",
+      "resolution_summary": "Moved AP channel (simulated change window). Laptop stable after test.",
+      "ticket_id": "TCK-1011",
+      "created_at": "2026-08-15T11:20:00",
+      "updated_at": "2026-08-15T15:40:00",
+      "status": "Closed",
+      "priority": "P3",
+      "category": "Network / Connectivity",
+      "requester_role": "Store Associate",
+      "requester_alias": "store.associate03",
+      "short_description": "Intermittent Wi-Fi on back-office laptop",
+      "user_facing_summary": "Laptop drops Wi-Fi in the stockroom. Wired back-office PC is stable.",
+      "business_impact": "Back-office OrderFlow lookups delayed on one laptop.",
+      "impact_scope": "Individual",
+      "assigned_group": "Network Support",
+      "assigned_to": "agent.river",
+      "first_response_minutes": 25,
+      "sla_target_minutes": 480,
+      "sla_status": "Met",
+      "related_runbook": "POS / Device Support Triage",
+      "prevention_action": "Survey stockroom coverage on the next store visit.",
+      "priority_justification": "P3: single device, wired workaround.",
+      "investigation_notes": "OrderFlow health unaffected. No auth incident correlation.",
+      "related_log_events": [],
+      "triage_checklist": [
+        {
+          "item": "Wired vs wireless",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-15T11:20:00",
+          "note": "Store ticket."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-15T11:45:00",
+          "note": "Network queue."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-15T13:00:00",
+          "note": "Coverage gap in stockroom."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-15T15:30:00",
+          "note": "Channel change tested."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-15T15:40:00",
+          "note": "User confirmed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 165,
+      "root_cause_category": "Heavy report query",
+      "resolution_summary": "Advised narrower date range. API times remained under threshold.",
+      "ticket_id": "TCK-1012",
+      "created_at": "2026-08-14T09:30:00",
+      "updated_at": "2026-08-14T12:15:00",
+      "status": "Closed",
+      "priority": "P3",
+      "category": "Performance / Slow Response",
+      "requester_role": "Finance Analyst",
+      "requester_alias": "finance.analyst04",
+      "short_description": "OrderFlow reports page slow on Friday morning",
+      "user_facing_summary": "Reports tab took longer than usual. Orders still saved.",
+      "business_impact": "Report generation delayed; no order-entry stoppage.",
+      "impact_scope": "Individual",
+      "assigned_group": "Application Support L2",
+      "assigned_to": "agent.quinn",
+      "first_response_minutes": 16,
+      "sla_target_minutes": 480,
+      "sla_status": "Met",
+      "related_runbook": "Application Performance Triage",
+      "prevention_action": "Add a date-range hint on the reports screen.",
+      "priority_justification": "P3: slowness, not an outage.",
+      "investigation_notes": "Average API 180ms. Health-check success 100% in sample window.",
+      "related_log_events": [
+        "09:32 INFO OrderFlow api_response path=/reports time_ms=180"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Check health before calling an outage",
+          "done": true
+        },
+        {
+          "item": "Compare API times to baseline",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-14T09:30:00",
+          "note": "Finance chat."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-14T09:46:00",
+          "note": "L2 assigned."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-14T10:20:00",
+          "note": "Wide date range query."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-14T12:05:00",
+          "note": "User retried with 7-day range."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-14T12:15:00",
+          "note": "Confirmed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Test",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 200,
+      "root_cause_category": "Test feed schedule",
+      "resolution_summary": "Test job had been paused. Restarted scheduled job in Test.",
+      "ticket_id": "TCK-1013",
+      "created_at": "2026-08-13T14:00:00",
+      "updated_at": "2026-08-13T17:20:00",
+      "status": "Closed",
+      "priority": "P3",
+      "category": "Data Sync / Integration",
+      "requester_role": "Merchandise Planner",
+      "requester_alias": "merch.planner02",
+      "short_description": "Inventory count from UAT feed not showing in OrderFlow Test",
+      "user_facing_summary": "Test inventory feed delayed in the Test environment.",
+      "business_impact": "Test only. No production inventory impact.",
+      "impact_scope": "Team",
+      "assigned_group": "Application Support L2",
+      "assigned_to": "agent.quinn",
+      "first_response_minutes": 30,
+      "sla_target_minutes": 1440,
+      "sla_status": "Met",
+      "related_runbook": "Application Performance Triage",
+      "prevention_action": "Alert when Test job is paused more than 2 hours.",
+      "priority_justification": "P3: Test environment.",
+      "investigation_notes": "Production jobs remained successful.",
+      "related_log_events": [
+        "14:05 INFO OrderFlow job inventory_sync status=success env=production"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Confirm environment is Test",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-13T14:00:00",
+          "note": "Planner email."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-13T14:30:00",
+          "note": "L2."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-13T15:10:00",
+          "note": "Test job paused."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-13T17:10:00",
+          "note": "Job restarted."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-13T17:20:00",
+          "note": "Counts visible."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 35,
+      "root_cause_category": "How-to / knowledge gap",
+      "resolution_summary": "Sent screenshot-style steps (simulated) for the reset link.",
+      "ticket_id": "TCK-1014",
+      "created_at": "2026-08-12T10:05:00",
+      "updated_at": "2026-08-12T10:40:00",
+      "status": "Closed",
+      "priority": "P4",
+      "category": "Knowledge Base / How-To Request",
+      "requester_role": "Finance Analyst",
+      "requester_alias": "finance.analyst05",
+      "short_description": "Where is the OrderFlow password-reset link?",
+      "user_facing_summary": "User asked how to start a password reset from the login page.",
+      "business_impact": "None at open. Later Monday lockouts show this article needs to be easier to find.",
+      "impact_scope": "Individual",
+      "assigned_group": "Service Desk L1",
+      "assigned_to": "agent.sage",
+      "first_response_minutes": 4,
+      "sla_target_minutes": 1440,
+      "sla_status": "Met",
+      "related_runbook": "User Cannot Sign In",
+      "prevention_action": "Place reset guidance next to the login button.",
+      "priority_justification": "P4: how-to.",
+      "investigation_notes": "No failed logins yet for this alias on 12 Aug.",
+      "related_log_events": [],
+      "triage_checklist": [
+        {
+          "item": "Do not reset without verification",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-12T10:05:00",
+          "note": "Chat."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-12T10:09:00",
+          "note": "KB sent."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-12T10:10:00",
+          "note": "How-to only."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-12T10:35:00",
+          "note": "User found the link."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-12T10:40:00",
+          "note": "Closed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": false,
+      "escalation_required": false,
+      "resolution_minutes": null,
+      "root_cause_category": "Pending investigation",
+      "resolution_summary": "Waiting on mail-flow check. Have not reset or unlocked yet \u2014 identity steps in progress.",
+      "ticket_id": "TCK-1015",
+      "created_at": "2026-08-17T08:55:00",
+      "updated_at": "2026-08-17T09:30:00",
+      "status": "Open",
+      "priority": "P3",
+      "category": "Password Reset",
+      "requester_role": "Operations Coordinator",
+      "requester_alias": "ops.coordinator03",
+      "short_description": "Password reset email not received",
+      "user_facing_summary": "User requested a reset and did not see the email in inbox or junk.",
+      "business_impact": "One Ops user waiting on reset mail. Other Ops users can sign in.",
+      "impact_scope": "Individual",
+      "assigned_group": "Service Desk L1",
+      "assigned_to": "agent.sage",
+      "first_response_minutes": 20,
+      "sla_target_minutes": 480,
+      "sla_status": "At Risk",
+      "related_runbook": "User Cannot Sign In",
+      "prevention_action": "Document expected delay for reset mail.",
+      "priority_justification": "P3: single user, identity verification not complete.",
+      "investigation_notes": "No lockout events for this alias yet. Follow policy before any reset.",
+      "related_log_events": [],
+      "triage_checklist": [
+        {
+          "item": "Never skip identity verification",
+          "done": false
+        },
+        {
+          "item": "Check junk/spam with the user",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T08:55:00",
+          "note": "Ticket opened."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T09:15:00",
+          "note": "Asked identity questions."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T09:30:00",
+          "note": "Mail-flow still checking."
+        },
+        {
+          "phase": "Resolved",
+          "at": null,
+          "note": "Open."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "Open."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 50,
+      "root_cause_category": "User input error leading to lockout",
+      "resolution_summary": "Unlocked after verification. Confirmed Caps Lock. Contrast with 17 Aug multi-user incident.",
+      "ticket_id": "TCK-1016",
+      "created_at": "2026-08-11T13:10:00",
+      "updated_at": "2026-08-11T14:00:00",
+      "status": "Closed",
+      "priority": "P3",
+      "category": "Account Lockout",
+      "requester_alias": "finance.analyst06",
+      "requester_role": "Finance Analyst",
+      "short_description": "Single-user lockout after typing the password with Caps Lock",
+      "user_facing_summary": "One user locked after failed attempts; no other Finance reports that day.",
+      "business_impact": "Individual only.",
+      "impact_scope": "Individual",
+      "assigned_group": "Identity & Access",
+      "assigned_to": "agent.nova",
+      "first_response_minutes": 7,
+      "sla_target_minutes": 240,
+      "sla_status": "Met",
+      "related_runbook": "Account Lockout",
+      "prevention_action": "Mention Caps Lock on the login error copy.",
+      "priority_justification": "P3: one user, quickly restored.",
+      "investigation_notes": "No cluster. Example of one-user vs multi-user distinction.",
+      "related_log_events": [
+        "13:12 account_lockout finance.analyst06"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Search for other lockouts same hour",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-11T13:10:00",
+          "note": "Call."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-11T13:17:00",
+          "note": "L1."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-11T13:25:00",
+          "note": "Single lockout."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-11T13:50:00",
+          "note": "Unlocked."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-11T14:00:00",
+          "note": "Confirmed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "UAT",
+      "user_confirmation": false,
+      "escalation_required": false,
+      "resolution_minutes": null,
+      "root_cause_category": "Access request",
+      "resolution_summary": "Waiting on manager approval in UAT.",
+      "ticket_id": "TCK-1017",
+      "created_at": "2026-08-18T09:00:00",
+      "updated_at": "2026-08-18T09:40:00",
+      "status": "Open",
+      "priority": "P4",
+      "category": "User Access / Permissions",
+      "requester_role": "Merchandise Planner",
+      "requester_alias": "merch.planner03",
+      "short_description": "Read-only access requested for seasonal planning dashboard",
+      "user_facing_summary": "New planner needs view-only OrderFlow planning widgets.",
+      "business_impact": "None until access is granted; no outage.",
+      "impact_scope": "Individual",
+      "assigned_group": "Service Desk L1",
+      "assigned_to": "agent.sage",
+      "first_response_minutes": 28,
+      "sla_target_minutes": 1440,
+      "sla_status": "Met",
+      "related_runbook": "Incident Escalation and Prioritization",
+      "prevention_action": "Joiners checklist for planners.",
+      "priority_justification": "P4: UAT, non-blocking.",
+      "investigation_notes": "No auth failures.",
+      "related_log_events": [],
+      "triage_checklist": [
+        {
+          "item": "Manager approval required",
+          "done": false
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-18T09:00:00",
+          "note": "Form submitted."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-18T09:28:00",
+          "note": "Asked for approver."
+        },
+        {
+          "phase": "Investigated",
+          "at": null,
+          "note": "Pending approval."
+        },
+        {
+          "phase": "Resolved",
+          "at": null,
+          "note": "Open."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "Open."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "Store POS",
+      "environment": "Production",
+      "user_confirmation": false,
+      "escalation_required": false,
+      "resolution_minutes": null,
+      "root_cause_category": "Pending investigation",
+      "resolution_summary": "Remote checks done. Spare scanner shipping (simulated).",
+      "ticket_id": "TCK-1018",
+      "created_at": "2026-08-17T15:20:00",
+      "updated_at": "2026-08-17T16:10:00",
+      "status": "In Progress",
+      "priority": "P3",
+      "category": "POS Issue",
+      "requester_role": "Store Associate",
+      "requester_alias": "store.associate04",
+      "short_description": "Barcode scanner intermittently skips SKUs on Register 1",
+      "user_facing_summary": "Scanner misses some barcodes; keyboard entry still works.",
+      "business_impact": "One register slower. Store still serving customers.",
+      "impact_scope": "Individual",
+      "assigned_group": "POS Support",
+      "assigned_to": "agent.river",
+      "first_response_minutes": 19,
+      "sla_target_minutes": 480,
+      "sla_status": "Met",
+      "related_runbook": "POS / Device Support Triage",
+      "prevention_action": "Keep a spare scanner in the store cabinet.",
+      "priority_justification": "P3: workaround via keyboard.",
+      "investigation_notes": "Not related to OrderFlow authentication incident.",
+      "related_log_events": [],
+      "triage_checklist": [
+        {
+          "item": "Confirm keyboard workaround",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T15:20:00",
+          "note": "Store ticket."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T15:39:00",
+          "note": "POS queue."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T16:10:00",
+          "note": "Hardware likely."
+        },
+        {
+          "phase": "Resolved",
+          "at": null,
+          "note": "Waiting on spare."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "In progress."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": false,
+      "escalation_required": true,
+      "resolution_minutes": null,
+      "root_cause_category": "Local WAN interruption",
+      "resolution_summary": "Circuit recovered. Monitoring packet loss. Not an application outage.",
+      "ticket_id": "TCK-1019",
+      "created_at": "2026-08-17T11:45:00",
+      "updated_at": "2026-08-17T13:30:00",
+      "status": "Escalated",
+      "priority": "P2",
+      "category": "Network / Connectivity",
+      "requester_role": "Store Associate",
+      "requester_alias": "store.associate05",
+      "short_description": "Brief WAN blip at Store 14 \u2014 POS recovered, OrderFlow web slow to load",
+      "user_facing_summary": "Internet dropped for a few minutes. POS recovered. Browser OrderFlow was slow afterward.",
+      "business_impact": "Single store. Orders on POS continued after recovery. Not the Finance login incident.",
+      "impact_scope": "Team",
+      "assigned_group": "Network Support",
+      "assigned_to": "agent.river",
+      "first_response_minutes": 10,
+      "sla_target_minutes": 240,
+      "sla_status": "At Risk",
+      "escalation_reasoning": "WAN symptom at one store. Escalated to Network. Separated from INC-20260817-001 (auth).",
+      "related_runbook": "Incident Escalation and Prioritization",
+      "prevention_action": "Confirm ISP ticket number in closure notes.",
+      "priority_justification": "P2: store connectivity event, recovered, still monitoring.",
+      "investigation_notes": "Auth incident users were Finance/Ops on corporate network, not Store 14 WAN.",
+      "related_log_events": [],
+      "triage_checklist": [
+        {
+          "item": "Separate store WAN from corporate auth incident",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T11:45:00",
+          "note": "Store manager called."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T11:55:00",
+          "note": "Network engaged."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T12:20:00",
+          "note": "Circuit flap, recovered."
+        },
+        {
+          "phase": "Resolved",
+          "at": null,
+          "note": "Monitoring."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "Escalated."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 160,
+      "root_cause_category": "Peak-hour list refresh",
+      "resolution_summary": "Advised smaller wave size. API times acceptable.",
+      "ticket_id": "TCK-1020",
+      "created_at": "2026-08-10T08:50:00",
+      "updated_at": "2026-08-10T11:30:00",
+      "status": "Closed",
+      "priority": "P3",
+      "category": "Performance / Slow Response",
+      "requester_role": "Operations Coordinator",
+      "requester_alias": "ops.coordinator04",
+      "short_description": "Pick-wave screen lagged during peak",
+      "user_facing_summary": "Pick-wave list refreshed slowly. Picks still processed.",
+      "business_impact": "Ops delay, no outage.",
+      "impact_scope": "Team",
+      "assigned_group": "Application Support L2",
+      "assigned_to": "agent.quinn",
+      "first_response_minutes": 20,
+      "sla_target_minutes": 480,
+      "sla_status": "Met",
+      "related_runbook": "Application Performance Triage",
+      "prevention_action": "Review pick-wave page caching.",
+      "priority_justification": "P3: degraded, not down.",
+      "investigation_notes": "Health checks passed throughout.",
+      "related_log_events": [
+        "08:55 INFO OrderFlow api_response path=/waves time_ms=210"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Health vs slowness",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-10T08:50:00",
+          "note": "Ops chat."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-10T09:10:00",
+          "note": "L2."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-10T09:40:00",
+          "note": "Large wave size."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-10T11:20:00",
+          "note": "Smaller waves."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-10T11:30:00",
+          "note": "Confirmed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "UAT",
+      "user_confirmation": false,
+      "escalation_required": false,
+      "resolution_minutes": null,
+      "root_cause_category": "UAT job window",
+      "resolution_summary": "UAT job rerun requested. Production sync healthy on 17 Aug.",
+      "ticket_id": "TCK-1021",
+      "created_at": "2026-08-09T15:00:00",
+      "updated_at": "2026-08-19T10:00:00",
+      "status": "In Progress",
+      "priority": "P3",
+      "category": "Data Sync / Integration",
+      "requester_role": "Finance Coordinator",
+      "requester_alias": "finance.coordinator02",
+      "short_description": "UAT settlement file arrived late overnight",
+      "user_facing_summary": "UAT settlement file missed the usual window. Production file was on time.",
+      "business_impact": "UAT testing delay only.",
+      "impact_scope": "Team",
+      "assigned_group": "Application Support L2",
+      "assigned_to": "agent.quinn",
+      "first_response_minutes": 40,
+      "sla_target_minutes": 1440,
+      "sla_status": "Met",
+      "related_runbook": "Application Performance Triage",
+      "prevention_action": "Separate UAT job alerts from production.",
+      "priority_justification": "P3: UAT.",
+      "investigation_notes": "Important contrast: production jobs succeeded during the auth incident.",
+      "related_log_events": [
+        "07:15 INFO OrderFlow job settlement_export status=success env=production"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Production vs UAT",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-09T15:00:00",
+          "note": "Finance UAT."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-09T15:40:00",
+          "note": "L2."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-18T16:00:00",
+          "note": "UAT pause identified."
+        },
+        {
+          "phase": "Resolved",
+          "at": null,
+          "note": "Rerun scheduled."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "In progress."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 25,
+      "root_cause_category": "How-to / knowledge gap",
+      "resolution_summary": "Sent KB article.",
+      "ticket_id": "TCK-1022",
+      "created_at": "2026-08-08T11:00:00",
+      "updated_at": "2026-08-08T11:25:00",
+      "status": "Closed",
+      "priority": "P4",
+      "category": "Knowledge Base / How-To Request",
+      "requester_role": "Operations Coordinator",
+      "requester_alias": "ops.coordinator05",
+      "short_description": "How to add a watcher on an OrderFlow exception queue",
+      "user_facing_summary": "How-to request. No error.",
+      "business_impact": "None.",
+      "impact_scope": "Individual",
+      "assigned_group": "Service Desk L1",
+      "assigned_to": "agent.sage",
+      "first_response_minutes": 8,
+      "sla_target_minutes": 1440,
+      "sla_status": "Met",
+      "related_runbook": "User Cannot Sign In",
+      "prevention_action": "None beyond KB.",
+      "priority_justification": "P4.",
+      "investigation_notes": "Training request.",
+      "related_log_events": [],
+      "triage_checklist": [
+        {
+          "item": "KB first",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-08T11:00:00",
+          "note": "Chat."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-08T11:08:00",
+          "note": "Article sent."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-08T11:10:00",
+          "note": "How-to."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-08T11:20:00",
+          "note": "Done."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-08T11:25:00",
+          "note": "Closed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 30,
+      "root_cause_category": "Password reset process confusion",
+      "resolution_summary": "Reset completed. Later lockout handled on TCK-1001. Shows why reset guidance must precede unlocks.",
+      "ticket_id": "TCK-1023",
+      "created_at": "2026-08-17T07:50:00",
+      "updated_at": "2026-08-17T08:20:00",
+      "status": "Closed",
+      "priority": "P2",
+      "category": "Password Reset",
+      "requester_role": "Finance Analyst",
+      "requester_alias": "finance.analyst01",
+      "short_description": "Overnight password reset for Finance analyst (same user later locked)",
+      "user_facing_summary": "User completed a reset before shift. Later opened TCK-1001 for lockout.",
+      "business_impact": "Start of the access-incident chain.",
+      "impact_scope": "Individual",
+      "assigned_group": "Service Desk L1",
+      "assigned_to": "agent.sage",
+      "first_response_minutes": 3,
+      "sla_target_minutes": 240,
+      "sla_status": "Met",
+      "related_runbook": "User Cannot Sign In",
+      "prevention_action": "Link reset guidance in the unlock runbook.",
+      "priority_justification": "P2 in hindsight as part of INC-20260817-001 chain; originally treated as standard reset.",
+      "investigation_notes": "Related tickets: TCK-1001. Do not treat as a separate outage.",
+      "related_log_events": [
+        "07:51 password_reset finance.analyst01"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Identity verified",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T07:50:00",
+          "note": "Reset request."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T07:53:00",
+          "note": "L1."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T07:55:00",
+          "note": "Reset sent."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-17T08:15:00",
+          "note": "User said reset worked."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-17T08:20:00",
+          "note": "Closed; later lockout on TCK-1001."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 45,
+      "root_cause_category": "Stale MFA enrollment",
+      "resolution_summary": "Re-enrolled MFA. Recurring category used in monthly review.",
+      "ticket_id": "TCK-1024",
+      "created_at": "2026-08-06T09:15:00",
+      "updated_at": "2026-08-06T10:00:00",
+      "status": "Closed",
+      "priority": "P3",
+      "category": "MFA Failure",
+      "requester_role": "Operations Supervisor",
+      "requester_alias": "ops.supervisor02",
+      "short_description": "MFA after phone replacement (previous week)",
+      "user_facing_summary": "Codes failed until re-enrollment after a phone swap.",
+      "business_impact": "Individual. Same pattern later seen on 17 Aug.",
+      "impact_scope": "Individual",
+      "assigned_group": "Identity & Access",
+      "assigned_to": "agent.nova",
+      "first_response_minutes": 12,
+      "sla_target_minutes": 240,
+      "sla_status": "Met",
+      "related_runbook": "MFA Troubleshooting",
+      "prevention_action": "Trigger MFA review when a device-replacement ticket closes.",
+      "priority_justification": "P3: one user, previous week.",
+      "investigation_notes": "Establishes MFA mismatch as a known recurring category.",
+      "related_log_events": [
+        "09:16 mfa_enrollment_mismatch ops.supervisor02"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Device change question",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-06T09:15:00",
+          "note": "Call."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-06T09:27:00",
+          "note": "IAM."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-06T09:35:00",
+          "note": "Stale factor."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-06T09:50:00",
+          "note": "Re-enrolled."
+        },
+        {
+          "phase": "Closed",
+          "at": "2026-08-06T10:00:00",
+          "note": "Confirmed."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "OrderFlow",
+      "environment": "Production",
+      "user_confirmation": true,
+      "escalation_required": false,
+      "resolution_minutes": 40,
+      "root_cause_category": "Routine cache refresh",
+      "resolution_summary": "Confirmed cache refresh in application.log. Communicated that OrderFlow was healthy and login issues were identity-related.",
+      "ticket_id": "TCK-1025",
+      "created_at": "2026-08-17T12:30:00",
+      "updated_at": "2026-08-17T13:10:00",
+      "status": "Resolved",
+      "priority": "P3",
+      "category": "Application Error",
+      "requester_role": "Merchandise Planner",
+      "requester_alias": "merch.planner01",
+      "short_description": "Harmless cache miss banner on OrderFlow home",
+      "user_facing_summary": "Yellow banner about cache refresh. Page still loaded.",
+      "business_impact": "Cosmetic. Users worried it was related to login issues.",
+      "impact_scope": "Organization",
+      "assigned_group": "Application Support L2",
+      "assigned_to": "agent.quinn",
+      "first_response_minutes": 12,
+      "sla_target_minutes": 480,
+      "sla_status": "Met",
+      "related_runbook": "Application Performance Triage",
+      "prevention_action": "Soften banner copy so it is not read as an outage.",
+      "priority_justification": "P3: communication risk during an access incident, no outage.",
+      "investigation_notes": "Used to show support can separate app health from auth incidents.",
+      "related_log_events": [
+        "12:31 INFO OrderFlow cache_status status=refresh_ok"
+      ],
+      "triage_checklist": [
+        {
+          "item": "Do not declare an outage from a banner alone",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-17T12:30:00",
+          "note": "Multiple chats."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-17T12:42:00",
+          "note": "L2."
+        },
+        {
+          "phase": "Investigated",
+          "at": "2026-08-17T12:50:00",
+          "note": "Routine cache."
+        },
+        {
+          "phase": "Resolved",
+          "at": "2026-08-17T13:05:00",
+          "note": "Comms sent."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "Resolved."
+        }
+      ]
+    },
+    {
+      "created_by_data_note": "Simulated Support Data. All companies, users, tickets, logs, incidents, and metrics are fictional and created solely for portfolio demonstration.",
+      "affected_service": "Store POS",
+      "environment": "Production",
+      "user_confirmation": false,
+      "escalation_required": false,
+      "resolution_minutes": null,
+      "root_cause_category": "Supply request",
+      "resolution_summary": "Logged for store operations. Not a break/fix.",
+      "ticket_id": "TCK-1026",
+      "created_at": "2026-08-19T08:10:00",
+      "updated_at": "2026-08-19T08:25:00",
+      "status": "Open",
+      "priority": "P4",
+      "category": "POS Issue",
+      "requester_role": "Store Associate",
+      "requester_alias": "store.associate06",
+      "short_description": "Request extra receipt paper for Store 8",
+      "user_facing_summary": "Supply request, not a defect.",
+      "business_impact": "None yet.",
+      "impact_scope": "Individual",
+      "assigned_group": "POS Support",
+      "assigned_to": "agent.sage",
+      "first_response_minutes": 15,
+      "sla_target_minutes": 1440,
+      "sla_status": "Met",
+      "related_runbook": "POS / Device Support Triage",
+      "prevention_action": "Move supply requests off the incident queue.",
+      "priority_justification": "P4: supply.",
+      "investigation_notes": "Misrouted how-to/supply vs incident \u2014 good triage example.",
+      "related_log_events": [],
+      "triage_checklist": [
+        {
+          "item": "Reclassify supply vs incident",
+          "done": true
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Reported",
+          "at": "2026-08-19T08:10:00",
+          "note": "Store email."
+        },
+        {
+          "phase": "Acknowledged",
+          "at": "2026-08-19T08:25:00",
+          "note": "Reclassified."
+        },
+        {
+          "phase": "Investigated",
+          "at": null,
+          "note": "Ops supply path."
+        },
+        {
+          "phase": "Resolved",
+          "at": null,
+          "note": "Open."
+        },
+        {
+          "phase": "Closed",
+          "at": null,
+          "note": "Open."
+        }
+      ]
+    }
+  ]
+}

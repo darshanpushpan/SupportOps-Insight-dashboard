@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Generate Incident Report - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="page-header">
+        <h1>Generate Incident Report</h1>
+        <p class="subtitle">Select log entries on the analysis page, then generate a structured incident report.</p>
+    </header>
+
+    <section class="card">
+        <p>To generate an incident report:</p>
+        <ol>
+            <li>Go to the <a href="{{ url_for('analyze') }}">Analyze</a> page</li>
+            <li>Select log entries using checkboxes (or use "Select Errors Only")</li>
+            <li>Add optional notes and click "Generate Report"</li>
+        </ol>
+        <a href="{{ url_for('analyze') }}" class="btn btn-primary">Go to Analysis</a>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+2025-08-12 14:30:01 INFO [UserService] [app-server-01] Application started successfully
+2025-08-12 14:30:15 INFO [PaymentService] [app-server-02] Payment gateway initialized
+2025-08-12 14:31:00 DEBUG [AuthService] [app-server-01] Token validation cache hit
+2025-08-12 14:32:15 ERROR [DatabaseService] [db-server-01] Database connection failed
+2025-08-12 14:32:16 ERROR [DatabaseService] [db-server-01] Database connection failed
+2025-08-12 14:33:00 WARNING [PaymentService] [app-server-02] Payment gateway timeout detected
+2025-08-12 14:33:45 ERROR [PaymentService] [app-server-02] Payment gateway timeout
+2025-08-12 14:34:00 CRITICAL [OrderService] [app-server-03] Order processing crash - out of memory
+2025-08-12 14:35:10 INFO [UserService] [app-server-01] User login successful
+2025-08-12 14:36:22 ERROR [AuthService] [app-server-01] Authentication failed for user admin
+2025-08-12 14:37:00 WARNING [ApiGateway] [gateway-01] High latency detected on /api/orders
+2025-08-12 14:38:15 ERROR [ApiGateway] [gateway-01] Connection refused to backend service
+2025-08-12 14:39:00 INFO [CheckoutService] [app-server-04] Checkout session created
+2025-08-12 14:40:00 CRITICAL [SecurityService] [app-server-01] Critical security exception detected
+ERROR: Simple format error - service unavailable
+[ERROR] Another simple format error message

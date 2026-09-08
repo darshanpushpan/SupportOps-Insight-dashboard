@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block title %}Analyze Logs - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container container-wide">
+    <header class="page-header">
+        <h1>Log Analysis</h1>
+        <p class="subtitle">Analyzing: <strong>{{ filename }}</strong></p>
+    </header>
+
+    <div class="stats-bar">
+        <span>Showing <strong>{{ filtered_count }}</strong> of <strong>{{ all_logs_count }}</strong> log entries</span>
+    </div>
+
+    <section class="card">
+        <h2>Filters</h2>
+        <form method="GET" class="filter-form" id="filter-form">
+            <div class="filter-grid">
+                <div class="form-group">
+                    <label for="level">Severity Level</label>
+                    <select name="level" id="level">
+                        <option value="">All Levels</option>
+                        {% for lvl in ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'] %}
+                        <option value="{{ lvl }}" {% if filters.level == lvl %}selected{% endif %}>{{ lvl }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="service">Service</label>
+                    <select name="service" id="service">
+                        <option value="">All Services</option>
+                        {% for svc in services %}
+                        <option value="{{ svc }}" {% if filters.service == svc %}selected{% endif %}>{{ svc }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="search">Search</label>
+                    <input type="text" name="search" id="search" value="{{ filters.search }}"
+                           placeholder="Search messages, services, hosts..."
+                           oninput="debounceSearch(this)">
+                    <small class="form-help">Press Ctrl+K to focus search</small>
+                </div>
+                <div class="form-group">
+                    <label for="sort_by">Sort By</label>
+                    <select name="sort_by" id="sort_by">
+                        <option value="timestamp" {% if filters.sort_by == 'timestamp' %}selected{% endif %}>Timestamp</option>
+                        <option value="level" {% if filters.sort_by == 'level' %}selected{% endif %}>Severity Level</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sort_order">Sort Order</label>
+                    <select name="sort_order" id="sort_order">
+                        <option value="desc" {% if filters.sort_order == 'desc' %}selected{% endif %}>Descending</option>
+                        <option value="asc" {% if filters.sort_order == 'asc' %}selected{% endif %}>Ascending</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                <button type="button" class="btn btn-secondary" onclick="clearFilters()">Clear All Filters</button>
+                <button type="button" class="btn btn-secondary" onclick="exportLogsAsCSV()">Export CSV</button>
+            </div>
+        </form>
+    </section>
+
+    {% if error_groups %}
+    <section class="card">
+        <h2>Error Groups</h2>
+        <p class="form-help">Grouped by message pattern (first 50 characters), sorted by frequency.</p>
+        <div class="error-groups">
+            {% for group in error_groups %}
+            <div class="error-group-item">
+                <div class="error-group-header">
+                    <span class="badge badge-error">{{ group.count }} occurrences</span>
+                    <span class="error-group-meta">
+                        Services: {{ group.services | join(', ') }} |
+                        Hosts: {{ group.hosts | join(', ') }} |
+                        Time: {{ group.time_range }}
+                    </span>
+                </div>
+                <pre class="error-sample">{{ group.sample_message }}</pre>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="card">
+        <div class="table-toolbar">
+            <h2>Log Entries</h2>
+            <div class="toolbar-actions">
+                <label class="checkbox-label">
+                    <input type="checkbox" onclick="toggleSelectAll(this)"> Select All
+                </label>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="selectErrorsOnly()">Select Errors Only</button>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('incident_generate') }}" id="incident-form">
+            <input type="hidden" name="file_id" value="{{ file_id }}">
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label for="notes">Incident Notes (optional)</label>
+                <textarea name="notes" id="notes" rows="2" placeholder="Additional context for the incident report..."></textarea>
+            </div>
+
+            <div class="report-actions">
+                <button type="submit" class="btn btn-primary">Generate Report (Selected)</button>
+                <button type="submit" name="report_scope" value="all_errors" class="btn btn-secondary">Generate Report (All Errors)</button>
+            </div>
+
+            <div class="table-responsive">
+                <table id="logs-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Select</th>
+                            <th scope="col">Timestamp</th>
+                            <th scope="col">Level</th>
+                            <th scope="col">Service</th>
+                            <th scope="col">Host</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in logs %}
+                        <tr>
+                            <td><input type="checkbox" name="logs" value="{{ log.id }}"></td>
+                            <td>{{ log.parsed_timestamp or log.timestamp or 'N/A' }}</td>
+                            <td><span class="badge badge-{{ log.level | lower }}">{{ log.level }}</span></td>
+                            <td>{{ log.service }}</td>
+                            <td>{{ log.host }}</td>
+                            <td class="message-cell">{{ log.message }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-ghost"
+                                        onclick="copyToClipboard({{ log.message | tojson }})"
+                                        title="Copy message">Copy</button>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7" class="empty-state">No log entries match the current filters.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+
+        {% if pagination.total_pages > 1 %}
+        <nav class="pagination" aria-label="Log pagination">
+            {% if pagination.has_prev %}
+            <a href="{{ url_for('analyze_file', file_id=file_id, page=pagination.page - 1, level=filters.level, service=filters.service, search=filters.search, sort_by=filters.sort_by, sort_order=filters.sort_order) }}" class="btn btn-sm btn-secondary">&laquo; Previous</a>
+            {% endif %}
+            <span>Page {{ pagination.page }} of {{ pagination.total_pages }}</span>
+            {% if pagination.has_next %}
+            <a href="{{ url_for('analyze_file', file_id=file_id, page=pagination.page + 1, level=filters.level, service=filters.service, search=filters.search, sort_by=filters.sort_by, sort_order=filters.sort_order) }}" class="btn btn-sm btn-secondary">Next &raquo;</a>
+            {% endif %}
+        </nav>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchTerm = {{ filters.search | tojson }};
+        if (searchTerm) {
+            highlightSearchTerm(searchTerm);
+        }
+    });
+</script>
+{% endblock %}

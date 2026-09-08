@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Logs - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="page-header">
+        <h1>Upload Log Files</h1>
+        <p class="subtitle">Upload application logs for analysis (.log, .txt, .json — max 16MB per file)</p>
+    </header>
+
+    <section class="card">
+        <form method="POST" enctype="multipart/form-data" onsubmit="return validateUploadForm()" aria-label="Log file upload form">
+            <div class="form-group">
+                <label for="files">Select Log Files</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="files" name="files" multiple
+                           accept=".log,.txt,.json"
+                           onchange="updateFileInput(this)"
+                           aria-describedby="file-help">
+                    <span class="file-name">No files selected</span>
+                </div>
+                <small id="file-help" class="form-help">You can select multiple files at once.</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload and Parse</button>
+        </form>
+    </section>
+
+    {% if files %}
+    <section class="card">
+        <h2>Uploaded Files</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Filename</th>
+                        <th>Format</th>
+                        <th>Log Entries</th>
+                        <th>Uploaded</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr>
+                        <td>{{ file.filename }}</td>
+                        <td><span class="badge badge-info">{{ file.format }}</span></td>
+                        <td>{{ file.log_count }}</td>
+                        <td>{{ file.uploaded_at[:19].replace('T', ' ') }}</td>
+                        <td class="actions-cell">
+                            <a href="{{ url_for('analyze_file', file_id=file.file_id) }}" class="btn btn-sm btn-primary">Analyze</a>
+                            <form method="POST" action="{{ url_for('delete_file', file_id=file.file_id) }}" class="inline-form"
+                                  onsubmit="return confirmDelete('Delete {{ file.filename }}?')">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+Aug 12 14:30:01 webserver01 nginx: 2025/08/12 14:30:01 [info] Server started
+Aug 12 14:31:15 appserver02 payment: 2025/08/12 14:31:15 [info] Payment service ready
+Aug 12 14:32:15 webserver01 nginx: 2025/08/12 14:32:15 [error] Connection refused
+Aug 12 14:32:16 webserver01 nginx: 2025/08/12 14:32:16 [error] Connection refused
+Aug 12 14:33:00 dbserver01 mysql: 2025/08/12 14:33:00 [warning] Slow query log enabled
+Aug 12 14:34:00 appserver03 order: 2025/08/12 14:34:00 [critical] Service crash detected
+Aug 12 14:35:10 authserver01 auth: 2025/08/12 14:35:10 [error] Authentication failed
+Aug 12 14:36:22 gateway01 haproxy: 2025/08/12 14:36:22 [error] Backend server timeout

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container">
+    <a href="{{ url_for('knowledge') }}" class="btn btn-secondary" style="margin-bottom:1rem;">&laquo; Back to Runbooks</a>
+    <section class="card markdown-content">
+        {{ body | safe }}
+    </section>
+</div>
+{% endblock %}

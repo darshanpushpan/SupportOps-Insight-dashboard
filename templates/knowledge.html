@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Runbooks - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="page-header">
+        <h1>Runbooks &amp; Knowledge Base</h1>
+        <p class="subtitle">Simulated documentation for the Northstar Retail / OrderFlow scenario</p>
+    </header>
+
+    <section class="card">
+        <h2>Documents</h2>
+        <ul class="doc-list">
+            {% for doc in docs %}
+            <li><a href="{{ url_for('knowledge_view', path=doc.path) }}">{{ doc.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+2026-08-17 06:05:00 INFO [AuthService] [app-server-01] event=login_success user=support.agent01 src_ip=10.10.10.20 host=northstar.example.com note=simulated
+2026-08-17 06:05:08 INFO [AuthService] [app-server-01] event=session_refresh user=support.agent01 src_ip=10.10.10.20 note=simulated
+2026-08-17 06:18:00 INFO [AuthService] [app-server-01] event=login_success user=support.agent02 src_ip=10.10.10.21 host=northstar.example.com note=simulated
+2026-08-17 06:18:08 INFO [AuthService] [app-server-01] event=session_refresh user=support.agent02 src_ip=10.10.10.21 note=simulated
+2026-08-17 06:42:00 INFO [AuthService] [app-server-01] event=login_success user=ops.supervisor01 src_ip=10.10.30.11 host=northstar.example.com note=simulated
+2026-08-17 06:42:08 INFO [AuthService] [app-server-01] event=session_refresh user=ops.supervisor01 src_ip=10.10.30.11 note=simulated
+2026-08-17 07:02:00 INFO [AuthService] [app-server-01] event=login_success user=merch.planner01 src_ip=10.10.40.15 host=northstar.example.com note=simulated
+2026-08-17 07:02:08 INFO [AuthService] [app-server-01] event=session_refresh user=merch.planner01 src_ip=10.10.40.15 note=simulated
+2026-08-17 07:15:00 INFO [AuthService] [app-server-01] event=login_success user=store.associate01 src_ip=10.10.50.8 host=northstar.example.com note=simulated
+2026-08-17 07:15:08 INFO [AuthService] [app-server-01] event=session_refresh user=store.associate01 src_ip=10.10.50.8 note=simulated
+2026-08-17 07:28:00 INFO [AuthService] [app-server-01] event=login_success user=finance.coordinator02 src_ip=10.10.21.40 host=northstar.example.com note=simulated
+2026-08-17 07:28:08 INFO [AuthService] [app-server-01] event=session_refresh user=finance.coordinator02 src_ip=10.10.21.40 note=simulated
+2026-08-17 07:40:00 INFO [AuthService] [app-server-01] event=login_success user=ops.coordinator04 src_ip=10.10.30.18 host=northstar.example.com note=simulated
+2026-08-17 07:40:08 INFO [AuthService] [app-server-01] event=session_refresh user=ops.coordinator04 src_ip=10.10.30.18 note=simulated
+2026-08-17 07:48:00 INFO [AuthService] [app-server-01] event=login_success user=support.agent01 src_ip=10.10.10.20 host=northstar.example.com note=simulated
+2026-08-17 07:48:08 INFO [AuthService] [app-server-01] event=session_refresh user=support.agent01 src_ip=10.10.10.20 note=simulated
+2026-08-17 07:51:12 INFO [AuthService] [app-server-01] event=password_reset user=finance.analyst01 src_ip=10.10.21.14 note=simulated
+2026-08-17 07:54:03 INFO [AuthService] [app-server-01] event=password_reset user=finance.analyst02 src_ip=10.10.21.15 note=simulated
+2026-08-17 08:04:22 INFO [AuthService] [app-server-01] event=password_reset user=finance.coordinator01 src_ip=10.10.21.16 note=simulated
+2026-08-17 08:07:40 INFO [AuthService] [app-server-01] event=password_reset user=ops.coordinator01 src_ip=10.10.30.12 note=simulated
+2026-08-17 08:08:08 ERROR [AuthService] [app-server-01] event=failed_login user=finance.analyst01 src_ip=10.10.21.14 reason=invalid_credentials note=simulated
+2026-08-17 08:08:32 ERROR [AuthService] [app-server-01] event=failed_login user=finance.analyst01 src_ip=10.10.21.14 reason=invalid_credentials note=simulated
+2026-08-17 08:08:51 ERROR [AuthService] [app-server-01] event=failed_login user=finance.analyst01 src_ip=10.10.21.14 reason=invalid_credentials note=simulated
+2026-08-17 08:10:04 WARNING [AuthService] [app-server-01] event=account_lockout user=finance.analyst01 src_ip=10.10.21.14 reason=threshold_exceeded note=simulated
+2026-08-17 08:10:20 ERROR [AuthService] [app-server-01] event=failed_login user=finance.analyst01 src_ip=10.10.21.14 reason=account_locked note=simulated
+2026-08-17 10:18:00 INFO [AuthService] [app-server-01] event=account_unlock user=finance.analyst01 actor=support.agent01 note=simulated
+2026-08-17 10:19:12 INFO [AuthService] [app-server-01] event=login_success user=finance.analyst01 src_ip=10.10.21.14 note=simulated
+2026-08-17 08:12:10 ERROR [AuthService] [app-server-01] event=failed_login user=finance.analyst02 src_ip=10.10.21.15 reason=invalid_credentials note=simulated
+2026-08-17 08:12:28 ERROR [AuthService] [app-server-01] event=failed_login user=finance.analyst02 src_ip=10.10.21.15 reason=invalid_credentials note=simulated
+2026-08-17 08:12:44 ERROR [AuthService] [app-server-01] event=failed_login user=finance.analyst02 src_ip=10.10.21.15 reason=invalid_credentials note=simulated
+2026-08-17 08:13:02 WARNING [AuthService] [app-server-01] event=account_lockout user=finance.analyst02 src_ip=10.10.21.15 reason=threshold_exceeded note=simulated
+2026-08-17 10:22:00 INFO [AuthService] [app-server-01] event=account_unlock user=finance.analyst02 actor=support.agent01 note=simulated
+2026-08-17 10:23:40 INFO [AuthService] [app-server-01] event=login_success user=finance.analyst02 src_ip=10.10.21.15 note=simulated
+2026-08-17 08:19:05 ERROR [AuthService] [app-server-01] event=failed_login user=ops.coordinator01 src_ip=10.10.30.12 reason=invalid_credentials note=simulated
+2026-08-17 08:19:18 ERROR [AuthService] [app-server-01] event=failed_login user=ops.coordinator01 src_ip=10.10.30.12 reason=invalid_credentials note=simulated
+2026-08-17 08:19:33 ERROR [AuthService] [app-server-01] event=failed_login user=ops.coordinator01 src_ip=10.10.30.12 reason=invalid_credentials note=simulated
+2026-08-17 08:19:47 ERROR [AuthService] [app-server-01] event=failed_login user=ops.coordinator01 src_ip=10.10.30.12 reason=invalid_credentials note=simulated
+2026-08-17 08:21:10 WARNING [AuthService] [app-server-01] event=account_lockout user=ops.coordinator01 src_ip=10.10.30.12 reason=threshold_exceeded note=simulated
+2026-08-17 11:00:00 INFO [AuthService] [app-server-01] event=account_unlock user=ops.coordinator01 actor=support.agent02 note=simulated
+2026-08-17 11:02:15 INFO [AuthService] [app-server-01] event=login_success user=ops.coordinator01 src_ip=10.10.30.12 note=simulated
+2026-08-17 08:10:40 ERROR [AuthService] [app-server-01] event=failed_login user=finance.coordinator01 src_ip=10.10.21.16 reason=invalid_credentials note=simulated
+2026-08-17 08:11:05 ERROR [AuthService] [app-server-01] event=failed_login user=finance.coordinator01 src_ip=10.10.21.16 reason=invalid_credentials note=simulated
+2026-08-17 09:12:00 INFO [AuthService] [app-server-01] event=login_success user=finance.coordinator01 src_ip=10.10.21.16 note=simulated
+2026-08-17 08:25:10 ERROR [AuthService] [app-server-01] event=mfa_failure user=ops.coordinator02 src_ip=10.10.30.13 reason=enrollment_mismatch note=simulated
+2026-08-17 08:25:40 ERROR [AuthService] [app-server-01] event=mfa_failure user=ops.coordinator02 src_ip=10.10.30.13 reason=enrollment_mismatch note=simulated
+2026-08-17 08:26:05 WARNING [AuthService] [app-server-01] event=mfa_enrollment_mismatch user=ops.coordinator02 src_ip=10.10.30.13 reason=stale_device note=simulated
+2026-08-17 11:38:00 INFO [AuthService] [app-server-01] event=mfa_reenroll user=ops.coordinator02 actor=support.agent02 note=simulated
+2026-08-17 11:39:20 INFO [AuthService] [app-server-01] event=login_success user=ops.coordinator02 src_ip=10.10.30.13 note=simulated
+2026-08-17 08:34:12 ERROR [AuthService] [app-server-01] event=mfa_failure user=finance.analyst03 src_ip=10.10.21.17 reason=invalid_code note=simulated
+2026-08-17 08:34:48 ERROR [AuthService] [app-server-01] event=mfa_failure user=finance.analyst03 src_ip=10.10.21.17 reason=invalid_code note=simulated
+2026-08-17 08:35:10 WARNING [AuthService] [app-server-01] event=mfa_enrollment_mismatch user=finance.analyst03 src_ip=10.10.21.17 reason=stale_factor note=simulated
+2026-08-17 11:55:00 INFO [AuthService] [app-server-01] event=mfa_reenroll user=finance.analyst03 actor=support.agent01 note=simulated
+2026-08-17 11:56:30 INFO [AuthService] [app-server-01] event=login_success user=finance.analyst03 src_ip=10.10.21.17 note=simulated
+2026-08-17 08:02:00 INFO [AuthService] [app-server-01] event=login_success user=ops.supervisor01 src_ip=10.10.30.11 host=northstar.example.com note=simulated
+2026-08-17 08:05:00 INFO [AuthService] [app-server-01] event=login_success user=merch.planner02 src_ip=10.10.40.16 host=northstar.example.com note=simulated
+2026-08-17 08:16:00 INFO [AuthService] [app-server-01] event=login_success user=store.associate02 src_ip=10.10.50.9 host=northstar.example.com note=simulated
+2026-08-17 08:22:00 INFO [AuthService] [app-server-01] event=login_success user=support.agent02 src_ip=10.10.10.21 host=northstar.example.com note=simulated
+2026-08-17 08:28:00 INFO [AuthService] [app-server-01] event=login_success user=finance.analyst04 src_ip=10.10.21.18 host=northstar.example.com note=simulated
+2026-08-17 08:31:00 INFO [AuthService] [app-server-01] event=login_success user=ops.coordinator04 src_ip=10.10.30.18 host=northstar.example.com note=simulated
+2026-08-17 08:38:00 INFO [AuthService] [app-server-01] event=login_success user=merch.planner01 src_ip=10.10.40.15 host=northstar.example.com note=simulated
+2026-08-17 08:44:00 INFO [AuthService] [app-server-01] event=login_success user=store.associate03 src_ip=10.10.50.10 host=northstar.example.com note=simulated
+2026-08-17 08:50:00 INFO [AuthService] [app-server-01] event=login_success user=support.agent01 src_ip=10.10.10.20 host=northstar.example.com note=simulated
+2026-08-17 08:58:00 INFO [AuthService] [app-server-01] event=login_success user=ops.supervisor01 src_ip=10.10.30.11 host=northstar.example.com note=simulated
+2026-08-17 09:06:00 INFO [AuthService] [app-server-01] event=login_success user=ops.supervisor01 src_ip=10.10.30.11 host=northstar.example.com note=simulated
+2026-08-17 09:12:00 INFO [AuthService] [app-server-01] event=login_success user=merch.planner03 src_ip=10.10.40.19 host=northstar.example.com note=simulated
+2026-08-17 09:20:00 INFO [AuthService] [app-server-01] event=login_success user=finance.analyst05 src_ip=10.10.21.19 host=northstar.example.com note=simulated
+2026-08-17 09:33:00 INFO [AuthService] [app-server-01] event=login_success user=store.associate01 src_ip=10.10.50.8 host=northstar.example.com note=simulated
+2026-08-17 09:47:00 INFO [AuthService] [app-server-01] event=login_success user=ops.coordinator05 src_ip=10.10.30.22 host=northstar.example.com note=simulated
+2026-08-17 10:02:00 INFO [AuthService] [app-server-01] event=login_success user=support.agent02 src_ip=10.10.10.21 host=northstar.example.com note=simulated
+2026-08-17 10:30:00 INFO [AuthService] [app-server-01] event=login_success user=merch.planner02 src_ip=10.10.40.16 host=northstar.example.com note=simulated
+2026-08-17 10:45:00 INFO [AuthService] [app-server-01] event=login_success user=finance.coordinator02 src_ip=10.10.21.40 host=northstar.example.com note=simulated
+2026-08-17 11:10:00 INFO [AuthService] [app-server-01] event=login_success user=store.associate04 src_ip=10.10.50.11 host=northstar.example.com note=simulated
+2026-08-17 11:25:00 INFO [AuthService] [app-server-01] event=login_success user=ops.coordinator04 src_ip=10.10.30.18 host=northstar.example.com note=simulated
+2026-08-17 12:00:00 INFO [AuthService] [app-server-01] event=login_success user=support.agent01 src_ip=10.10.10.20 host=northstar.example.com note=simulated
+2026-08-17 12:15:00 INFO [AuthService] [app-server-01] event=login_success user=merch.planner01 src_ip=10.10.40.15 host=northstar.example.com note=simulated
+2026-08-17 07:10:00 INFO [AuthService] [app-server-01] event=password_policy_ok user=support.agent01 note=simulated
+2026-08-17 09:01:00 INFO [AuthService] [app-server-01] event=password_policy_ok user=ops.supervisor01 note=simulated
+2026-08-17 10:05:00 INFO [AuthService] [app-server-01] event=password_policy_ok user=finance.analyst04 note=simulated
+2026-08-17 11:12:00 INFO [AuthService] [app-server-01] event=password_policy_ok user=merch.planner01 note=simulated
+2026-08-17 09:40:00 ERROR [AuthService] [app-server-01] event=failed_login user=store.associate06 src_ip=10.10.50.20 reason=invalid_credentials note=simulated
+2026-08-17 09:41:00 ERROR [AuthService] [app-server-01] event=failed_login user=store.associate06 src_ip=10.10.50.20 reason=invalid_credentials note=simulated
+2026-08-17 09:42:10 INFO [AuthService] [app-server-01] event=login_success user=store.associate06 src_ip=10.10.50.20 note=simulated
+THIS LINE IS MALFORMED AND SHOULD BE SKIPPED
+??? not-a-log-line

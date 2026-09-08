@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}{{ ticket.ticket_id }} - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container container-wide">
+    <header class="page-header">
+        <h1>{{ ticket.ticket_id }}</h1>
+        <p class="subtitle">{{ ticket.short_description }}</p>
+    </header>
+
+    <div class="disclaimer-banner">{{ ticket.created_by_data_note }}</div>
+
+    <section class="card">
+        <h2>Overview</h2>
+        <div class="detail-grid">
+            <div class="detail-item">
+                <div class="detail-label">Priority</div>
+                <div class="detail-value"><span class="priority-badge priority-{{ ticket.priority | lower }}">{{ ticket.priority }}</span></div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Status</div>
+                <div class="detail-value">{{ ticket.status }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">SLA Status</div>
+                <div class="detail-value"><span class="sla-badge sla-{{ ticket.sla_status | lower | replace(' ', '-') }}">{{ ticket.sla_status }}</span></div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">SLA Target</div>
+                <div class="detail-value">{{ ticket.sla_target_minutes }} min</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Category</div>
+                <div class="detail-value">{{ ticket.category }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Impact Scope</div>
+                <div class="detail-value">{{ ticket.impact_scope }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Environment</div>
+                <div class="detail-value">{{ ticket.environment }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Affected Service</div>
+                <div class="detail-value">{{ ticket.affected_service }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Assigned Group</div>
+                <div class="detail-value">{{ ticket.assigned_group }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Assigned To</div>
+                <div class="detail-value">{{ ticket.assigned_to }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Requester</div>
+                <div class="detail-value">{{ ticket.requester_alias }} ({{ ticket.requester_role }})</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Created / Updated</div>
+                <div class="detail-value">{{ ticket.created_at }} → {{ ticket.updated_at }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">First Response</div>
+                <div class="detail-value">{{ ticket.first_response_minutes }} min</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Resolution Time</div>
+                <div class="detail-value">{{ ticket.resolution_minutes if ticket.resolution_minutes is not none else 'Pending' }}{{ ' min' if ticket.resolution_minutes is not none else '' }}</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Impact &amp; Priority Justification</h2>
+        <p><strong>User-facing summary:</strong> {{ ticket.user_facing_summary }}</p>
+        <p style="margin-top:0.5rem;"><strong>Business impact:</strong> {{ ticket.business_impact }}</p>
+        <p style="margin-top:0.5rem;"><strong>Priority justification:</strong> {{ ticket.priority_justification }}</p>
+        {% if ticket.escalation_required %}
+        <p style="margin-top:0.5rem;"><strong>Escalation:</strong> {{ ticket.escalation_reasoning }}</p>
+        {% endif %}
+    </section>
+
+    <section class="card">
+        <h2>Triage Checklist</h2>
+        <ul class="checklist">
+            {% for item in ticket.triage_checklist %}
+            <li>
+                {% if item.done %}
+                <span class="check-done">✔</span>
+                {% else %}
+                <span class="check-pending">○</span>
+                {% endif %}
+                {{ item.item }}
+            </li>
+            {% else %}
+            <li>No checklist recorded for this ticket.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="card">
+        <h2>Investigation</h2>
+        <p><strong>Notes:</strong> {{ ticket.investigation_notes }}</p>
+        <p style="margin-top:0.5rem;"><strong>Root cause category:</strong> {{ ticket.root_cause_category }}</p>
+        {% if ticket.related_log_events %}
+        <h3 style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);">Related log events</h3>
+        <pre class="error-sample">{{ ticket.related_log_events | join('\n') }}</pre>
+        {% endif %}
+    </section>
+
+    <section class="card">
+        <h2>Timeline</h2>
+        <ul class="timeline">
+            {% for step in ticket.timeline %}
+            <li class="{{ 'timeline-pending' if not step.at }}">
+                <div class="timeline-phase">{{ step.phase }}</div>
+                <div class="timeline-time">{{ step.at or 'Pending' }}</div>
+                <div>{{ step.note }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="card">
+        <h2>Resolution</h2>
+        <p>{{ ticket.resolution_summary }}</p>
+        {% if ticket.prevention_action %}
+        <p style="margin-top:0.5rem;"><strong>Prevention action:</strong> {{ ticket.prevention_action }}</p>
+        {% endif %}
+        {% if ticket.related_runbook %}
+        <p style="margin-top:0.5rem;"><strong>Related runbook:</strong> {{ ticket.related_runbook }}</p>
+        {% endif %}
+        <p style="margin-top:0.5rem;"><strong>User confirmed resolution:</strong> {{ 'Yes' if ticket.user_confirmation else 'Not yet' }}</p>
+    </section>
+
+    <a href="{{ url_for('tickets_list') }}" class="btn btn-secondary">&laquo; Back to Tickets</a>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+2026-08-17 07:00:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=22 result=ok note=simulated
+2026-08-17 07:15:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=24 result=ok note=simulated
+2026-08-17 07:30:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=21 result=ok note=simulated
+2026-08-17 07:45:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=25 result=ok note=simulated
+2026-08-17 08:00:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=28 result=ok note=simulated
+2026-08-17 08:15:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=30 result=ok note=simulated
+2026-08-17 08:30:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=27 result=ok note=simulated
+2026-08-17 08:45:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=26 result=ok note=simulated
+2026-08-17 09:00:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=29 result=ok note=simulated
+2026-08-17 09:15:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=31 result=ok note=simulated
+2026-08-17 09:30:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=28 result=ok note=simulated
+2026-08-17 10:00:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=27 result=ok note=simulated
+2026-08-17 10:30:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=25 result=ok note=simulated
+2026-08-17 11:00:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=24 result=ok note=simulated
+2026-08-17 12:00:00 INFO [OrderFlow] [app-server-01] event=health_check path=/health status=200 time_ms=23 result=ok note=simulated
+2026-08-17 08:05:00 INFO [OrderFlow] [app-server-01] event=api_response path=/orders status=200 time_ms=95 note=simulated
+2026-08-17 08:20:00 INFO [OrderFlow] [app-server-01] event=api_response path=/inventory status=200 time_ms=110 note=simulated
+2026-08-17 08:40:00 INFO [OrderFlow] [app-server-01] event=api_response path=/waves status=200 time_ms=140 note=simulated
+2026-08-17 09:10:00 INFO [OrderFlow] [app-server-01] event=api_response path=/reports status=200 time_ms=180 note=simulated
+2026-08-17 09:50:00 INFO [OrderFlow] [app-server-01] event=api_response path=/orders status=200 time_ms=88 note=simulated
+2026-08-17 10:20:00 INFO [OrderFlow] [app-server-01] event=api_response path=/checkout status=200 time_ms=102 note=simulated
+2026-08-17 11:05:00 INFO [OrderFlow] [app-server-01] event=api_response path=/orders status=200 time_ms=91 note=simulated
+2026-08-17 12:10:00 INFO [OrderFlow] [app-server-01] event=api_response path=/inventory status=200 time_ms=99 note=simulated
+2026-08-17 07:15:00 INFO [OrderFlow] [app-server-01] event=background_job job=settlement_export status=success env=production note=simulated
+2026-08-17 08:00:00 INFO [OrderFlow] [app-server-01] event=background_job job=inventory_sync status=success env=production note=simulated
+2026-08-17 09:00:00 INFO [OrderFlow] [app-server-01] event=background_job job=pick_wave_build status=success env=production note=simulated
+2026-08-17 10:00:00 INFO [OrderFlow] [app-server-01] event=background_job job=cache_warmup status=success env=production note=simulated
+2026-08-17 11:00:00 INFO [OrderFlow] [app-server-01] event=background_job job=inventory_sync status=success env=production note=simulated
+2026-08-17 12:00:00 INFO [OrderFlow] [app-server-01] event=background_job job=order_aging status=success env=production note=simulated
+2026-08-17 08:12:00 INFO [OrderFlow] [app-server-01] event=db_status result=ok pool=healthy note=simulated
+2026-08-17 10:16:00 WARNING [OrderFlow] [app-server-01] event=validation_error sku=GC-SIM-100 path=/orders result=rejected note=simulated isolated_sku
+2026-08-17 12:31:00 INFO [OrderFlow] [app-server-01] event=cache_status status=refresh_ok note=simulated
+2026-08-17 08:35:00 INFO [OrderFlow] [app-server-01] event=scheduler status=running next=inventory_sync note=simulated

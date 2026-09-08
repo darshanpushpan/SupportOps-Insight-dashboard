@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Incident Reports - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="page-header">
+        <h1>Incident Reports</h1>
+        <p class="subtitle">View and manage generated incident reports</p>
+    </header>
+
+    {% if reports %}
+    <section class="card">
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Filename</th>
+                        <th>Created</th>
+                        <th>Size</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for report in reports %}
+                    <tr>
+                        <td>{{ report.filename }}</td>
+                        <td>{{ report.created_at }}</td>
+                        <td>{{ report.size_display }}</td>
+                        <td>
+                            <a href="{{ url_for('view_report', filename=report.filename) }}"
+                               class="btn btn-sm btn-primary" target="_blank" rel="noopener">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {% else %}
+    <section class="card empty-state-card">
+        <p>No incident reports generated yet.</p>
+        <a href="{{ url_for('analyze') }}" class="btn btn-primary">Analyze Logs</a>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}

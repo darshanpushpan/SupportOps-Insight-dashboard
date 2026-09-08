@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Operations - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container container-wide">
+    <header class="page-header">
+        <h1>Operations Signals</h1>
+        <p class="subtitle">Authentication and application health for Northstar Retail / OrderFlow</p>
+    </header>
+
+    <div class="disclaimer-banner">Simulated Support Data — sourced from {{ auth.source }} and {{ app_health.source }}.</div>
+
+    <section class="stats-grid" aria-label="Authentication statistics">
+        <div class="stat-card">
+            <div class="stat-icon">🔑</div>
+            <div class="stat-value">{{ auth.successful_logins }}</div>
+            <div class="stat-label">Successful Logins</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⛔</div>
+            <div class="stat-value">{{ auth.failed_logins }}</div>
+            <div class="stat-label">Failed Logins</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🔒</div>
+            <div class="stat-value">{{ auth.lockouts }}</div>
+            <div class="stat-label">Account Lockouts</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📱</div>
+            <div class="stat-value">{{ auth.mfa_errors }}</div>
+            <div class="stat-label">MFA Errors</div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Application Health</h2>
+        {% if app_health.available %}
+        <div class="detail-grid">
+            <div class="detail-item">
+                <div class="detail-label">Service Status</div>
+                <div class="detail-value">{{ app_health.service_status }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Health Checks</div>
+                <div class="detail-value">{{ app_health.health_checks }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Health Success Rate</div>
+                <div class="detail-value">{{ app_health.health_success_rate }}{{ '%' if app_health.health_success_rate is not none else '' }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Avg API Response</div>
+                <div class="detail-value">{{ app_health.avg_api_ms }}{{ ' ms' if app_health.avg_api_ms is not none else '' }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Background Jobs</div>
+                <div class="detail-value">{{ app_health.jobs_success }} / {{ app_health.jobs_total }} succeeded</div>
+            </div>
+        </div>
+        {% else %}
+        <p class="form-help">No application log data available. Run scripts/generate_sample_logs.py to populate simulated data.</p>
+        {% endif %}
+    </section>
+
+    <section class="card">
+        <h2>Accounts Requiring Attention</h2>
+        <h3 style="font-size:0.95rem;color:var(--text-muted);margin-bottom:0.5rem;">Locked accounts</h3>
+        <div class="tags">
+            {% for user in auth.locked_accounts %}
+            <span class="tag">{{ user }}</span>
+            {% else %}
+            <span class="tag" style="background:#6c757d;">None</span>
+            {% endfor %}
+        </div>
+
+        <h3 style="font-size:0.95rem;color:var(--text-muted);margin:1rem 0 0.5rem;">MFA issues</h3>
+        <div class="tags">
+            {% for user in auth.mfa_users %}
+            <span class="tag">{{ user }}</span>
+            {% else %}
+            <span class="tag" style="background:#6c757d;">None</span>
+            {% endfor %}
+        </div>
+
+        <h3 style="font-size:0.95rem;color:var(--text-muted);margin:1rem 0 0.5rem;">Failed logins at or above threshold ({{ auth.threshold }})</h3>
+        <div class="table-responsive">
+            <table>
+                <thead><tr><th>User</th><th>Failed Logins</th></tr></thead>
+                <tbody>
+                    {% for user, count in auth.over_threshold %}
+                    <tr><td>{{ user }}</td><td>{{ count }}</td></tr>
+                    {% else %}
+                    <tr><td colspan="2" class="empty-state">No users over threshold.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Recommended Support Actions</h2>
+        <ul class="insight-list">
+            {% for item in insights %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="card">
+        <h2>Recurring Ticket Categories</h2>
+        <p class="form-help">Categories with 2 or more tickets in the simulated queue.</p>
+        <div class="bar-rows" style="margin-top:0.75rem;">
+            {% for item in recurring %}
+            <div class="bar-row">
+                <span class="bar-row-label">{{ item.category }}</span>
+                <span class="bar-track"><span class="bar-fill" style="width:{{ (100 * item.count / recurring[0].count) | round | int }}%"></span></span>
+                <span class="bar-row-value">{{ item.count }}</span>
+            </div>
+            {% else %}
+            <p class="empty-state">No recurring categories found.</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

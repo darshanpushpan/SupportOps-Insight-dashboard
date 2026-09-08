@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="page-header">
+        <h1>Welcome to SupportOps Insight</h1>
+        <p class="subtitle">Production support dashboard for log analysis and incident reporting</p>
+    </header>
+
+    <section class="stats-grid" aria-label="Dashboard statistics">
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value">{{ stats.total_logs }}</div>
+            <div class="stat-label">Total Log Entries</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📁</div>
+            <div class="stat-value">{{ stats.files_uploaded }}</div>
+            <div class="stat-label">Files Uploaded</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-value">{{ stats.error_count }}</div>
+            <div class="stat-label">Error Count</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🔧</div>
+            <div class="stat-value">{{ stats.services_affected }}</div>
+            <div class="stat-label">Services Affected</div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Quick Start Guide</h2>
+        <ol class="steps-list">
+            <li>
+                <strong>Upload Logs</strong>
+                <p>Upload your application log files (.log, .txt, .json) for analysis.</p>
+                <a href="{{ url_for('upload') }}" class="btn btn-primary">Upload Logs</a>
+            </li>
+            <li>
+                <strong>Analyze</strong>
+                <p>Filter, search, and group errors to identify incidents.</p>
+                <a href="{{ url_for('analyze') }}" class="btn btn-secondary">Analyze Logs</a>
+            </li>
+            <li>
+                <strong>Generate Reports</strong>
+                <p>Create professional incident reports for escalation or documentation.</p>
+                <a href="{{ url_for('incident_generate') }}" class="btn btn-secondary">Generate Report</a>
+            </li>
+        </ol>
+    </section>
+
+    <section class="card">
+        <h2>Features</h2>
+        <ul class="features-list">
+            <li>Multi-format log parsing (Standard, JSON, Syslog, Simple)</li>
+            <li>Advanced filtering by severity, service, and keywords</li>
+            <li>Automatic error grouping and severity classification</li>
+            <li>Professional HTML incident report generation</li>
+            <li>CSV export and print-friendly reports</li>
+            <li>Responsive design for desktop and mobile</li>
+        </ul>
+    </section>
+</div>
+{% endblock %}

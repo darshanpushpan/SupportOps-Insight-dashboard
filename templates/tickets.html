@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Tickets - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container container-wide">
+    <header class="page-header">
+        <h1>Support Tickets</h1>
+        <p class="subtitle">Simulated ticket queue for Northstar Retail / OrderFlow</p>
+    </header>
+
+    <div class="disclaimer-banner">
+        {{ metrics.data_note }} Use this queue to practice triage, prioritization, and escalation — not real customer data.
+    </div>
+
+    <section class="stats-grid" aria-label="Ticket statistics">
+        <div class="stat-card">
+            <div class="stat-icon">🎫</div>
+            <div class="stat-value">{{ metrics.total }}</div>
+            <div class="stat-label">Tickets Shown</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🟠</div>
+            <div class="stat-value">{{ metrics.open }}</div>
+            <div class="stat-label">Open / In Progress / Escalated</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value">{{ metrics.resolved }}</div>
+            <div class="stat-label">Resolved / Closed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-value">{{ metrics.avg_first_response_minutes if metrics.avg_first_response_minutes is not none else '—' }}</div>
+            <div class="stat-label">Avg First Response (min)</div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Filters</h2>
+        <form method="GET" class="filter-form">
+            <div class="filter-grid">
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select name="status" id="status">
+                        <option value="">All Statuses</option>
+                        {% for s in statuses %}
+                        <option value="{{ s }}" {% if filters.status == s %}selected{% endif %}>{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority">
+                        <option value="">All Priorities</option>
+                        {% for p in priorities %}
+                        <option value="{{ p }}" {% if filters.priority == p %}selected{% endif %}>{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select name="category" id="category">
+                        <option value="">All Categories</option>
+                        {% for c in categories %}
+                        <option value="{{ c }}" {% if filters.category == c %}selected{% endif %}>{{ c }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="environment">Environment</label>
+                    <select name="environment" id="environment">
+                        <option value="">All Environments</option>
+                        {% for e in environments %}
+                        <option value="{{ e }}" {% if filters.environment == e %}selected{% endif %}>{{ e }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="assigned_group">Assigned Group</label>
+                    <select name="assigned_group" id="assigned_group">
+                        <option value="">All Groups</option>
+                        {% for g in groups %}
+                        <option value="{{ g }}" {% if filters.assigned_group == g %}selected{% endif %}>{{ g }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sla_status">SLA Status</label>
+                    <select name="sla_status" id="sla_status">
+                        <option value="">All</option>
+                        {% for sla in sla_statuses %}
+                        <option value="{{ sla }}" {% if filters.sla_status == sla %}selected{% endif %}>{{ sla }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date_from">Created From</label>
+                    <input type="date" name="date_from" id="date_from" value="{{ filters.date_from }}">
+                </div>
+                <div class="form-group">
+                    <label for="date_to">Created To</label>
+                    <input type="date" name="date_to" id="date_to" value="{{ filters.date_to }}">
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                <a href="{{ url_for('tickets_list') }}" class="btn btn-secondary">Clear All Filters</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Ticket Volume</h2>
+        <div class="metrics-grid">
+            <div>
+                <h3 style="margin-bottom:0.6rem;font-size:0.95rem;color:var(--text-muted);">By Status</h3>
+                <div class="bar-rows">
+                    {% for name, count, pct in status_bars %}
+                    <div class="bar-row">
+                        <span class="bar-row-label">{{ name }}</span>
+                        <span class="bar-track"><span class="bar-fill" style="width:{{ pct }}%"></span></span>
+                        <span class="bar-row-value">{{ count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                <h3 style="margin-bottom:0.6rem;font-size:0.95rem;color:var(--text-muted);">By Priority</h3>
+                <div class="bar-rows">
+                    {% for name, count, pct in priority_bars %}
+                    <div class="bar-row">
+                        <span class="bar-row-label">{{ name }}</span>
+                        <span class="bar-track"><span class="bar-fill" style="width:{{ pct }}%"></span></span>
+                        <span class="bar-row-value">{{ count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                <h3 style="margin-bottom:0.6rem;font-size:0.95rem;color:var(--text-muted);">By SLA</h3>
+                <div class="bar-rows">
+                    {% for name, count, pct in sla_bars %}
+                    <div class="bar-row">
+                        <span class="bar-row-label">{{ name }}</span>
+                        <span class="bar-track"><span class="bar-fill" style="width:{{ pct }}%"></span></span>
+                        <span class="bar-row-value">{{ count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="table-toolbar">
+            <h2>Tickets ({{ metrics.total }} of {{ total_unfiltered }})</h2>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Ticket</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">SLA</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Assigned Group</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Summary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in tickets %}
+                    <tr>
+                        <td><a href="{{ url_for('ticket_detail', ticket_id=t.ticket_id) }}">{{ t.ticket_id }}</a></td>
+                        <td><span class="priority-badge priority-{{ t.priority | lower }}">{{ t.priority }}</span></td>
+                        <td>{{ t.status }}</td>
+                        <td><span class="sla-badge sla-{{ t.sla_status | lower | replace(' ', '-') }}">{{ t.sla_status }}</span></td>
+                        <td>{{ t.category }}</td>
+                        <td>{{ t.assigned_group }}</td>
+                        <td>{{ t.created_at }}</td>
+                        <td class="message-cell">{{ t.short_description }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8" class="empty-state">No tickets match the current filters.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+{% endblock %}

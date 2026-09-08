@@ -1,0 +1,8 @@
+{"timestamp": "2025-08-12T14:30:01Z", "level": "INFO", "service": "UserService", "host": "app-server-01", "message": "Application started successfully"}
+{"timestamp": "2025-08-12T14:30:15Z", "level": "INFO", "service": "PaymentService", "host": "app-server-02", "message": "Payment gateway initialized"}
+{"timestamp": "2025-08-12T14:32:15Z", "level": "ERROR", "service": "PaymentService", "host": "app-server-01", "message": "Payment gateway timeout"}
+{"timestamp": "2025-08-12T14:33:00Z", "level": "WARNING", "service": "DatabaseService", "host": "db-server-01", "message": "Slow query detected on users table"}
+{"timestamp": "2025-08-12T14:34:00Z", "level": "CRITICAL", "service": "OrderService", "host": "app-server-03", "message": "Order processing crash - fatal exception"}
+{"timestamp": "2025-08-12T14:35:10Z", "level": "ERROR", "service": "AuthService", "host": "app-server-01", "message": "Authentication failed for user admin"}
+{"timestamp": "2025-08-12T14:36:22Z", "level": "ERROR", "service": "DatabaseService", "host": "db-server-01", "message": "Database connection failed"}
+{"timestamp": "2025-08-12T14:37:00Z", "level": "ERROR", "service": "ApiGateway", "host": "gateway-01", "message": "Connection refused to backend service"}

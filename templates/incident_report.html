@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Incident Report Preview - SupportOps Insight{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="card">
+        <h1>Incident Report</h1>
+        <p>Incident reports are generated as standalone HTML documents and open in a new tab.</p>
+        <p>Report ID: <strong>{{ report_id }}</strong></p>
+        <a href="{{ report_url }}" class="btn btn-primary" target="_blank" rel="noopener">View Full Report</a>
+        <a href="{{ url_for('reports_list') }}" class="btn btn-secondary">Back to Reports</a>
+    </section>
+</div>
+{% endblock %}

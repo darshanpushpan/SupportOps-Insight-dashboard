@@ -1,154 +1,151 @@
 # SupportOps Insight
 
-Production support dashboard for analyzing application logs, identifying incidents, and generating structured incident reports.
+A production-support dashboard for IT/application support teams: upload raw application logs, get them parsed and classified automatically, and turn a pile of errors into a professional incident report in a few clicks.
+
+Built with **Python, Flask, and Jinja2** — no JavaScript frameworks, no database. Everything from log parsing to severity scoring to HTML report generation is implemented from scratch to keep the stack small and the logic transparent.
+
+![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3.0-000000?logo=flask&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+---
+
+## Why I built this
+
+Support and on-call teams spend a lot of time doing the same manual work: pulling raw log files, scanning for errors, figuring out if three tickets are actually one incident, and writing up what happened for escalation. SupportOps Insight automates the repetitive parts of that workflow — parsing, grouping, and severity scoring — so a human can focus on the actual triage decision.
+
+To make the project demonstrate a realistic support environment (not just a log parser), I added a simulated ticket queue, an authentication/application-health signals dashboard, and a runbook knowledge base, all built around one consistent fictional scenario (a retail company called "Northstar Retail" running an order-management system called "OrderFlow"). Every simulated data set is clearly labeled as fictional in the UI.
+
+## Screenshots
+
+**Dashboard** — at-a-glance stats and a guided quick-start
+![Dashboard](docs/screenshots/dashboard.png)
+
+**Upload** — multi-file upload with automatic format detection
+![Upload](docs/screenshots/upload.png)
+
+**Log Analysis** — filter, search, and group repeated errors by pattern
+![Log Analysis](docs/screenshots/analyze.png)
+
+**Incident Report** — a generated, print-ready HTML report
+![Incident Report](docs/screenshots/incident-report.png)
+
+**Ticket Queue** — a simulated support queue with SLA tracking and triage
+![Tickets](docs/screenshots/tickets.png)
+
+**Operations Signals** — authentication and application health at a glance
+![Operations](docs/screenshots/operations.png)
 
 ## Features
 
-- **Multi-format log parsing** — Standard, JSON, Syslog, and Simple formats
-- **Log analysis dashboard** — Filter by severity, service, keywords; sort and paginate results
-- **Error grouping** — Automatically groups repeated errors by message pattern
-- **Severity classification** — Scores logs based on level, keywords, and critical services
-- **Incident reports** — Professional HTML reports with print support
-- **Reports management** — View and manage generated incident reports
+**Log intelligence**
+- Auto-detects and parses four log formats: standard `LEVEL [service] [host] message`, JSON, syslog, and simple `[ERROR] message` styles
+- Filters by severity, service, and free-text search; sorts by timestamp or severity
+- Groups repeated errors by message pattern and shows occurrence counts, affected services/hosts, and time range
+- Severity scoring that combines log level with keyword and service-name heuristics (e.g. `payment`, `auth`, `database` push severity up)
 
-## Requirements
+**Incident reporting**
+- Generates a self-contained, print-friendly HTML incident report from selected logs or "all errors"
+- Auto-computed severity, affected components, top error messages, and a full log table
+- Reports are saved to disk and listed on a Reports page for later reference
 
-- Python 3.8+
-- pip
+**Simulated support operations** *(portfolio scenario — clearly labeled as fictional in-app)*
+- A 26-ticket support queue with priority, SLA status, triage checklists, timelines, and root-cause notes
+- An operations dashboard summarizing authentication events (lockouts, MFA failures, failed-login clustering) and application health (uptime, API latency, job success)
+- A runbook knowledge base with cross-linked Markdown docs (rendered by a small built-in Markdown-to-HTML converter) covering incident escalation, account lockouts, MFA troubleshooting, and more
 
-## Installation
+## Tech Stack
 
-```bash
-# Create virtual environment
-python -m venv venv
+| Layer | Choice |
+|---|---|
+| Backend | Python 3.8+, Flask 3.0 (application-factory pattern) |
+| Parsing / data | Regex-based multi-format log parser, `python-dateutil` for timestamp normalization |
+| Templates | Jinja2 |
+| Frontend | Vanilla HTML5/CSS3/JS — no build step, no framework |
+| Storage | In-memory for parsed logs (per session), flat files (JSON/Markdown) for tickets and docs |
+| Deployment | Gunicorn + `render.yaml` / `Procfile` for one-click deploy |
 
-# Activate (Windows)
-venv\Scripts\activate
+## Architecture
 
-# Activate (macOS/Linux)
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
+```
+Upload (Flask route) → LogParser (auto-detect format) → in-memory store
+                                                              │
+                              ┌───────────────────────────────┤
+                              ▼                                ▼
+                    SeverityClassifier                  Analysis UI
+                    (score + group errors)          (filter/search/sort)
+                              │
+                              ▼
+                    IncidentGenerator
+                    (renders self-contained HTML report)
 ```
 
-## Running the Application
+- **`utils/log_parser.py`** — tries JSON, then standard, then syslog, then simple regex patterns against each line; normalizes every match into a common schema (`timestamp`, `level`, `service`, `host`, `message`, …).
+- **`utils/severity_classifier.py`** — scores each entry (base severity from log level, +1 per matched critical keyword/service) and groups related errors by the first 50 characters of their message.
+- **`utils/incident_generator.py`** — renders a complete, inline-styled HTML report (no external CSS dependency, so it's portable and print-safe).
+- **`utils/ticket_store.py`**, **`utils/ops_signals.py`**, **`utils/markdown_lite.py`** — support the simulated ticket queue, auth/health signal aggregation, and the runbook viewer, respectively.
+
+## Getting Started
 
 ```bash
+git clone https://github.com/darshanpushpan/SupportOps-Insight-dashboard.git
+cd SupportOps-Insight-dashboard
+
+python -m venv venv
+venv\Scripts\activate        # Windows
+source venv/bin/activate     # macOS/Linux
+
+pip install -r requirements.txt
 python app.py
 ```
 
-Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000). Sample log files (`sample_standard.log`, `sample_json.log`, `sample_syslog.log`) are included in the repo root for quick testing.
+
+To populate the simulated ticket queue and operations dashboard with fresh fictional data:
+
+```bash
+python scripts/generate_sample_tickets.py
+python scripts/generate_sample_logs.py
+python scripts/analyze_auth_logs.py
+```
 
 ## Project Structure
 
 ```
-supportops-insight/
-├── app.py                      # Main Flask application
-├── config.py                   # Configuration settings
-├── requirements.txt            # Python dependencies
+SupportOps-Insight-dashboard/
+├── app.py                       # Flask app factory and all routes
+├── config.py                    # Dev/production configuration
+├── requirements.txt
+├── render.yaml / Procfile       # Deployment config (Render / Heroku-style)
 ├── utils/
-│   ├── log_parser.py           # Multi-format log parsing
-│   ├── severity_classifier.py  # Error grouping and severity scoring
-│   └── incident_generator.py   # HTML incident report generation
-├── templates/                  # Jinja2 HTML templates
-├── static/
-│   ├── css/style.css           # Responsive styles
-│   └── js/dashboard.js         # Frontend interactivity
-├── uploads/                    # Uploaded log files (auto-created)
-├── reports/                    # Generated incident reports (auto-created)
-└── logs/                       # Application logs (auto-created)
+│   ├── log_parser.py            # Multi-format log parsing
+│   ├── severity_classifier.py   # Error grouping and severity scoring
+│   ├── incident_generator.py    # HTML incident report generation
+│   ├── ticket_store.py          # Simulated ticket queue + metrics
+│   ├── ops_signals.py           # Auth/app health signal aggregation
+│   └── markdown_lite.py         # Dependency-free Markdown renderer
+├── scripts/                     # Generators for the simulated data sets
+├── templates/                   # Jinja2 templates
+├── static/{css,js}/             # Styles and frontend interactivity
+├── docs/                        # Runbooks + incident write-ups (Markdown)
+├── data/                        # Simulated ticket data (JSON)
+├── uploads/ / reports/ / logs/  # Runtime storage (auto-created)
+└── sample_*.log                 # Sample files for each supported format
 ```
 
-## Usage
-
-### 1. Upload Logs
-
-1. Navigate to **Upload Logs**
-2. Select one or more `.log`, `.txt`, or `.json` files (max 16MB each)
-3. Click **Upload and Parse**
-
-Sample test files are included in the project root:
-
-- `sample_standard.log`
-- `sample_json.log`
-- `sample_syslog.log`
-
-### 2. Analyze Logs
-
-1. After upload, you are redirected to the analysis page
-2. Use filters to narrow results by severity, service, or keyword
-3. Review error groups sorted by frequency
-4. Select log entries for incident reporting
-
-**Keyboard shortcut:** `Ctrl+K` focuses the search box.
-
-### 3. Generate Incident Reports
-
-1. On the analysis page, select log entries (or use **Select Errors Only**)
-2. Add optional notes
-3. Click **Generate Report (Selected)** or **Generate Report (All Errors)**
-4. View the report from the **Reports** page
-
-## API Endpoint
+## API
 
 ```
 GET /api/logs/<file_id>?level=ERROR&search=timeout&sort_by=timestamp&sort_order=desc
 ```
 
-Returns JSON with parsed logs and error groups.
+Returns JSON with the filtered log entries and computed error groups for a given uploaded file.
 
-## Configuration
+## Deployment
 
-Environment variables:
+The repo includes a `render.yaml` blueprint and `Procfile`, so it deploys to [Render](https://render.com) in a few clicks: **New +** → **Blueprint** → select this repo. Gunicorn serves the app in production; `SECRET_KEY` is auto-generated by the blueprint.
 
-| Variable | Description |
-|----------|-------------|
-| `SECRET_KEY` | Flask secret key (required in production) |
-| `FLASK_ENV` | `development` or `production` |
-
-## Production Deployment
-
-```bash
-export SECRET_KEY="your-secure-secret-key"
-export FLASK_ENV=production
-
-pip install gunicorn
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
-```
-
-Recommended:
-
-- Use nginx as a reverse proxy
-- Enable HTTPS with SSL certificates
-- Set up log rotation for the `logs/` directory
-- Back up `uploads/` and `reports/` folders regularly
-
-## Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| Upload fails | Check file extension (.log, .txt, .json) and size (max 16MB) |
-| No logs parsed | Verify log format matches supported patterns |
-| Empty analysis | Upload a file first from the Upload page |
-| Reports not showing | Check the `reports/` directory exists and is writable |
-
-## Manual Testing Checklist
-
-- [ ] Upload single log file (all formats)
-- [ ] Upload multiple log files at once
-- [ ] Reject invalid file types
-- [ ] Reject files over 16MB
-- [ ] Filter logs by severity level
-- [ ] Filter logs by service name
-- [ ] Search logs by keyword
-- [ ] Sort by timestamp and level
-- [ ] Generate incident report with selected logs
-- [ ] Generate incident report with all errors
-- [ ] View generated reports list
-- [ ] Delete uploaded log file
-- [ ] Responsive design on mobile
-- [ ] Print incident report
+> Note: the free tier's filesystem is ephemeral — uploaded logs and generated reports won't survive a redeploy. Fine for a demo, not for production use without persistent storage.
 
 ## License
 
